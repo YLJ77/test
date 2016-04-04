@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.clear{zoom:1;}
+		.clear:after{
+			content:'';
+			display:block;
+			clear:both;
+			height:0;
+			overflow:hidden;
+		}
+		.wrap{
+			width: 900px;
+			height: 320px;
+			margin:0 auto;
+		}
+		.wrap div{
+			width: 180px;
+			height: 320px;
+			float:left;
+		}
+		#pic_1{
+			background: url(img/img1.jpg) left center no-repeat;
+			transition:all 1s;
+		}
+		#pic_2{
+			background: url(img/img2.jpg) left center no-repeat;
+			transition:all 1s;
+		}
+		#pic_3{
+			background: url(img/img3.jpg) left center no-repeat;
+			transition:all 1s;
+		}
+		#pic_4{
+			background: url(img/img4.jpg) left center no-repeat;
+			transition:all 1s;
+		}
+		#pic_5{
+			background: url(img/img5.jpg) left center no-repeat;
+			transition:all 1s;
+		}
+
+		.wrap:hover #pic_1,.wrap:hover #pic_2,.wrap:hover #pic_3,.wrap:hover #pic_4,.wrap:hover #pic_5{
+			width: 65px;
+		}
+		
+
+		.wrap #pic_1:hover{
+			width: 640px;
+		}
+		.wrap #pic_2:hover{
+			width: 640px;
+		}
+		.wrap #pic_3:hover{
+			width: 640px;
+		}
+		.wrap #pic_4:hover{
+			width: 640px;
+		}
+		.wrap #pic_5:hover{
+			width: 640px;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="wrap clear">
+		<div id="pic_1"></div>
+		<div id="pic_2"></div>
+		<div id="pic_3"></div>
+		<div id="pic_4"></div>
+		<div id="pic_5"></div>
+	</div>
+</body>
+</html>

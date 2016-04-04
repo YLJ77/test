@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+		margin:0;
+		padding:0;
+	}
+	.clear{
+		zoom:1;
+	}
+	.clear:after{
+		content:'';
+		display: block;
+		clear:both;
+		height:0;
+		overflow: hidden;
+	}
+	.display{border:1px solid black;width:50px;}
+	.display>li{
+		width: 50px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		border-bottom: 1px solid black;
+		position: relative;
+	}
+	.display>li:last-child{
+		border:none;
+	}
+	.display .hidden{
+		border:1px solid black;
+		display: none;
+		position:absolute;
+		left:50px;
+		top:-1px;
+	}
+	.display .hidden li{
+		width: 50px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		list-style: none;
+	}
+	.display .hidden li:hover{
+		background: blue;
+	}
+	.display li:hover ul{
+		display: block;
+	}
+	</style>
+</head>
+<body>
+	<ul class="display">
+		<li>list01
+			<ul class="hidden">
+				<li>A</li>
+				<li>B</li>
+				<li>C</li>
+				<li>D</li>
+			</ul>
+		</li>
+		<li>list02
+			<ul class="hidden">
+				<li>A</li>
+				<li>B</li>
+				<li>C</li>
+				<li>D</li>
+			</ul>
+		</li>
+		<li>list03
+			<ul class="hidden">
+				<li>A</li>
+				<li>B</li>
+				<li>C</li>
+				<li>D</li>
+			</ul>
+		</li>
+		<li>list04
+			<ul class="hidden">
+				<li>A</li>
+				<li>B</li>
+				<li>C</li>
+				<li>D</li>
+			</ul>
+		</li>
+	</ul>
+</body>
+</html>

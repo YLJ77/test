@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.div_1{
+			width: 200px;
+			height: 200px;
+			/*border:50px solid transparent;
+			padding:50px;
+			background: url(img1.jpg);*/
+			/*background-clip:border-box;*/
+			/*background-clip:padding-box;*/
+			/*background-clip:content-box;*/
+			/*background-origin:border-box;
+			background-size:100% 100%;*/
+			/*background:-webkit-linear-gradient(left top,orange,yellow,white);*/
+			/*background: -webkit-repeating-radial-gradient(50% 50%,orange 10%,yellow 20%);*/
+			
+			border-radius:100px;
+			background: -webkit-radial-gradient(65px 73px,white,black);
+			margin:20px;
+		}
+		.div_2{
+			width: 400px;
+			height: 50px;
+			border-radius: 20px;
+			background:-webkit-linear-gradient(black,white 40%,black);
+		}
+		.div_3{
+			width: 100px;
+			height: 100px;
+			background: orange;
+			/*transition:1000ms;*/
+			transition:width 1s,height 1s 1s,background 1s 2s;
+			transition-timing-function:;
+		}
+		.div_3:hover{
+			width: 200px;
+			height: 200px;
+			background: yellow;
+		}
+	</style>
+</head>
+<body>
+	<div class="div_1"></div>
+	<div class="div_2"></div>
+	<div class="div_3"></div>
+</body>
+</html>

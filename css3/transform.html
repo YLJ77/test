@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			/*-webkit-transform-style:preserve-3d;*/
+			/*-webkit-perspective:1000px;*/
+		}
+		.div_1{
+			width: 100px;
+			height: 100px;
+			background: orange;
+			-webkit-transform:translateX(1px) translateY(1px) rotate(50deg) ;
+			-webkit-transform-origin:50% 50%;
+			margin:50px auto;
+		}
+		.div_2{
+			width: 100px;
+			height: 100px;
+			background: yellow;
+			margin:50px auto;
+			transform: skewX(0deg) skewY(0deg);
+			overflow:hidden;
+		}
+		img{
+			width: 100px;
+			height: 100px;
+			transition:1s;
+		}
+		img:hover{
+			transform:scale3d(1.2,1.2,1);
+		}
+		.div_3{
+			width: 100px;
+			height: 100px;
+			margin:50px auto;
+			position: relative;
+			transform-style:preserve-3d;
+			transform:rotateX(0deg) rotateY(0deg);
+			/*transition:1s;*/
+			animation: move 2s infinite;
+		}
+		/*.div_3:hover{
+			transform:rotateY(360deg) rotateX(360deg);
+		}*/
+		@keyframes move{
+			from{transform:rotateY(0deg) rotateX(0deg);}
+			to{transform:rotateY(360deg) rotateX(360deg);}
+		}
+		.div_3 div{
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top:0;
+			left:0;
+			opacity:0.8;
+
+		}
+		.div_3 div:nth-child(1){
+			background: orange;
+			transform:translateZ(50px);
+		}
+		.div_3 div:nth-child(2){
+			background: yellow;
+			transform:translateZ(-50px);
+		}
+		.div_3 div:nth-child(3){
+			background: red;
+			transform:rotateX(90deg) translateZ(-50px);
+		}
+		.div_3 div:nth-child(4){
+			background: green;
+			transform:rotateX(90deg) translateZ(50px);
+		}
+		.div_3 div:nth-child(5){
+			background: blue;
+			transform:rotateY(90deg) translateZ(-50px);
+		}
+		.div_3 div:nth-child(6){
+			background: purple;
+			transform:rotateY(90deg) translateZ(50px);
+		}
+		
+		.clear{zoom:1;}
+		.clear:after{
+			content:'';
+			display:block;
+			clear:both;
+			height:0;
+			overflow:hidden;
+		}
+		.div_4{
+			/*border:1px solid black;*/
+			margin:50px auto;
+			width: 400px;
+			height: 100px;
+			position: relative;
+			overflow:hidden;
+		}
+		.inner{
+			width: 800px;
+			overflow:hidden;
+			height: 100px;
+			position: absolute;
+			animation:move2 2s infinite linear;
+		}
+		@keyframes move2{
+			from{left:0;}
+			to{left:-400px;}
+		}
+		.inner div{
+			width: 100px;
+			height: 100px;
+			line-height: 100px;
+			text-align: center;
+			float:left;
+		}
+		.inner div:nth-child(2n){
+			background: orange;
+		}
+		.inner div:nth-child(2n+1){
+			background: yellow;
+		}
+
+		.div_5{
+			width: 200px;
+			height: 200px;
+			margin:50px auto;
+			animation:move3 2s linear infinite;
+		}
+		.div_5 div{
+			height: 100px;
+			width: 100px;
+			background: red;
+			float:left;
+		}
+		.div_5 div:nth-child(1){
+			border-radius: 0 70%;
+		}
+		.div_5 div:nth-child(2){
+			border-radius: 70% 0;
+		}
+		.div_5 div:nth-child(3){
+			border-radius: 70% 0;
+		}
+		.div_5 div:nth-child(4){
+			border-radius: 0 70%;
+		}
+		@keyframes move3{
+			from{transform:rotateZ(0deg)}
+			to{transform:rotateZ(360deg);}
+		}
+	</style>
+</head>
+<body>
+	<div class="div_1"></div>
+	<div class="div_2">
+		<img src="img1.jpg" alt="">
+	</div>
+	<div class="div_3">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+
+	<div class="div_4">
+		<div class="inner clear">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+		</div>
+	</div>
+
+	<div class="div_5 clear">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+</body>
+</html>
