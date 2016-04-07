@@ -1,0 +1,7 @@
+$headings:(h1:2em,h2:1.5em,h3:1.2em,h4:11px,h5:12px,h6:13px);
+$header:(h1 h2 h3 h4 h5 h6);
+@each $header,$size in $headings{
+	#{$header}{
+		font-size:$size;
+	}
+}
