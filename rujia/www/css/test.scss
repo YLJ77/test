@@ -1,7 +1,47 @@
-$headings:(h1:2em,h2:1.5em,h3:1.2em,h4:11px,h5:12px,h6:13px);
-$header:(h1 h2 h3 h4 h5 h6);
-@each $header,$size in $headings{
-	#{$header}{
-		font-size:$size;
+// $headings:(h1:2em,h2:1.5em,h3:1.2em,h4:11px,h5:12px,h6:13px);
+// $header:(h1 h2 h3 h4 h5 h6);
+// @each $header,$size in $headings{
+// 	#{$header}{
+// 		font-size:$size;
+// 	}
+// }
+
+
+@mixin center($width: null, $height: null) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    @if not $width and not $height {
+        transform: translate(-50%, -50%);
+    } @else if $width and $height {
+        width: $width;
+        height: $height;
+        margin-top: -($width / 2);
+        margin-left: -($height / 2);
+    } @else if not $height {
+        width: $width;
+        margin-left: -($width / 2);
+        transform: translateY(-50%);
+    } @else {
+        height: $height;
+        margin-top: -($height / 2);
+        transform: translateX(-50%);
+    }
+}
+
+
+.parent{
+	width: 500px;
+	height: 300px;
+	background-color:red;
+	position: relative;
+	display:flex;
+	transform:scale(2);
+	.child{
+		width: 50px;
+		height: 50px;
+		background-color:yellow;
+		@include center(50px,50px);
 	}
 }
