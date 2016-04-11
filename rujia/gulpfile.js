@@ -74,7 +74,7 @@ gulp.task('browser-sync',['sass'],function(){
 
   browserSync.init({
       //代理
-      //proxy: "localhost:7777/www"
+      //proxy: "localhost:7777"
       //静态服务器
       
       server:{
@@ -84,7 +84,7 @@ gulp.task('browser-sync',['sass'],function(){
   });
   
 
-  gulp.watch(['./www/css/*.scss','./www/css/*.css'],['sass','autoprefixer']);
+  gulp.watch(['./www/css/*.scss'],['sass']);
   gulp.watch('./www/*.html').on('change',reload);
 });
 

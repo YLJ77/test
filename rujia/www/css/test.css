@@ -3,9 +3,7 @@
   height: 300px;
   background-color: red;
   position: relative;
-  display: -webkit-box;
   display: flex;
-  -webkit-transform: scale(2);
   transform: scale(2); }
 
 .parent .child {
