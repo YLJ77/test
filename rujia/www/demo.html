@@ -4,10 +4,11 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script>
-		var name = "hello";
-		var pwd = "world";
-		var msg = (name=="haello" && pwd =="world") ? "登陆成功！" : "登陆失败";
-		console.log(msg);
+		var sum = 0;
+		for(var i = 1; i <= 5; i++) {
+			if(i % 2 != 0) sum += i;
+		}
+		console.log(sum);
 	</script>
 </head>
 <body>
