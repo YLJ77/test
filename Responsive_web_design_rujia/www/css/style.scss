@@ -1,0 +1,492 @@
+@import 'reset';
+@import 'constant';
+html {
+  font-size: 100px;
+}
+body {
+  font-size: .12rem;
+  background:white;
+}
+.wrap {
+  max-width:9.6rem;
+  min-width:320px;
+  margin: 0 auto;
+}
+.header{
+  img{
+    width: 100%;
+  }
+  a{
+    display:none;
+  }
+  a:nth-child(1){
+      display:block;
+  }
+}
+.top_txt{
+    font-size: .3rem;
+    text-indent: .6rem;
+  //width: 7.65rem;
+    width:86.21%;
+    margin: .54rem auto 0;
+    span {
+      color: #e85416;
+    }
+}
+.btn {
+  padding-top: 1.02rem;
+  width: 5.72rem;
+  margin: 0 auto;
+  a {
+    display: inline-block;
+    width: 2.80rem;
+    height: .68rem;
+    line-height: .68rem;
+    text-align: center;
+    color: white;
+    font-size: .24rem;
+  }
+  a:nth-of-type(1) {
+    background-color: #e89316;
+    margin-right: .08rem;
+    @media screen and (max-width:550px){
+      margin-right: .04rem;
+    }
+  }
+  a:nth-of-type(2) {
+    background-color: #ec5510;
+  }
+}
+.mid_txt {
+  margin-top: 1.02rem;
+  /*padding-left: 2.87rem;*/
+  div {
+    width: 4.2rem;
+    height: .43rem;
+    line-height: .43rem;
+    vertical-align: top;
+    font-size: .19rem;
+    border-bottom: .02rem solid #fee097;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+form {
+  margin: 0 auto;
+  width: 3.62rem;
+  input{
+    &[type=text] {
+      width: 3.58rem;height: .45rem;
+      min-height:22px;
+      min-width: 179px;
+      outline: none;
+      border: .01rem solid #d0d5e8;
+      font-size: .21rem;
+      color: #d0d5e8;
+      line-height: .45rem;
+      text-indent: .10rem;
+      margin-top: .18rem;
+      background-color: #f9fafe;
+      &:nth-of-type(3) {
+        min-width: 121px;
+        width: 2.42rem;
+      }
+    }
+    
+    &[type=button] {
+      width: 1.08rem;
+      height: .47rem;
+      background-color: #f9fafe;
+      border: .01rem solid #d0d5e8;
+      color: #fdb32e;
+      line-height: .45rem;
+      text-align: center;
+      font-size: .18rem;
+      margin-top: .18rem;
+      vertical-align: bottom;
+    }
+    &[type=submit] {
+      width: 1.28rem;
+      // height: .44rem;
+      height:100%;
+      background-color: #ed5410;
+      font-size: .26rem;
+      line-height: .44rem;
+      text-align: center;
+      float: right;
+      border: none;
+      color: white;
+    }
+  }
+  
+  & > div {
+    margin-top: .16rem;
+    .txt {
+      width: 2.20rem;
+      display: inline-block;
+      float: left;
+      vertical-align: top;
+      div {
+        text-align: right;
+        font-size: .18rem;
+        color: #616161;
+        line-height: .22rem
+      }
+      span {
+        color: red;
+      }
+    }
+  }
+  
+  & > a {
+    display: inline-block;
+    width: 3.58rem;
+    height: .44rem;
+    background-color: #f8f9d7;
+    border: .01rem solid #edb055;
+    line-height: .44rem;
+    text-align: center;
+    margin-top: .22rem;
+    font-size: .21rem;
+    color: #e99211;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+.share_suc_tip{
+  height: 3.74rem;
+  line-height: 3.74rem;
+  text-align: center;
+  vertical-align:middle;
+  font-size:.3rem;
+  color:#ed763e;
+  margin:0 auto;
+}
+.share_suc_content a:nth-of-type(2){
+  margin-top:.21rem;
+}
+
+.share_suc_share{
+  display: block;
+  width: 3.58rem;
+  height: .44rem;
+  background-color: #f8f9d7;
+  border:.01rem solid #edb055;
+  line-height: .44rem;
+  text-align: center;
+  font-size:.21rem;
+  color:#e99211;
+  margin:0 auto;
+}
+.registerd_h1{
+  margin-top:.91rem;
+  text-align: center;
+  font-size:.26rem;
+  color:#ee5310;
+}
+.registerd_txt{
+  // width: 7.65rem;
+  width:79.58%;
+  font-size:.27rem;
+  text-indent: .54rem;
+  margin:.29rem auto 1.31rem;
+  line-height: .48rem;
+}
+.registerd_txt span{
+  color:#ea5415;
+}
+.registerd_suc_h1{
+  margin-top:.96rem;
+  text-align: center;
+  font-size:.27rem;
+  color:#ed5410;
+}
+.registerd_suc1{
+  margin-top:.14rem;
+  font-size:.2rem;
+  text-align: center;
+}
+.registerd_suc2{
+  margin-top:.17rem;
+  font-size:.2rem;
+  text-align: center;
+}
+.registerd_suc3{
+  margin:.5rem auto .8rem;
+  font-size:.23rem;
+  // width: 7.42rem;
+  width:77.29%;
+}
+
+
+.friend_share_content a:nth-of-type(2){
+  margin-top:.21rem;
+}
+.friend_share_top_txt{
+  margin:.64rem auto 0;
+  // width: 7.38rem;
+  width:86.21%;
+  font-size:.2rem;
+  vertical-align:middle;
+  span{
+    color:#ed5313;
+    vertical-align:middle;
+  }
+  a{
+    width: 1.08rem;
+    height: .38rem;
+    line-height: .38rem;
+    text-align: center;
+    font-size:.22rem;
+    display: inline-block;
+    background-color: #ed5410;
+    color:white;
+  }
+}
+
+#friend_share_form{
+  margin:.72rem auto 0;
+  width: 3.6rem;
+  text-align: center;
+  input{
+    &[type=text]{
+      width: 3.52rem;
+      height: .36rem;
+      border:1px solid #c5c5c5;
+      color:#c5c5c5;
+      line-height: .36rem;
+      text-indent: .12rem;
+      letter-spacing: .04rem;
+      font-size:.16rem;
+      margin-bottom: .08rem;
+      &:nth-child(5){
+        margin-bottom: 0;
+      }
+    }
+    &[type=submit]{
+      width: 2.11rem;
+      height: .67rem;
+      margin:.24rem auto 0;
+      line-height: .67rem;
+      text-align: center;
+      color:white;
+      border:none;
+      background-color: #ed5410;
+      font-size:.22rem;
+      float:none;
+    }
+  }
+  &>a:nth-of-type(1){
+    margin-top:.45rem;
+  }
+}
+
+.friend_share_share{
+  display: block;
+  width: 3.58rem;
+  height: .44rem;
+  background-color: #f8f9d7;
+  border:.01rem solid #edb055;
+  line-height: .44rem;
+  text-align: center;
+  font-size:.21rem;
+  color:#e99211;
+  margin:0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.active_detail_content {
+  .txt{
+    width:80%;
+    margin:0 auto;
+  }
+  margin:0 auto;
+  h1{
+    font-size:.36rem;
+    text-align: center;
+    color:#ed5411;
+    width: 1.6rem;
+    margin:.61rem auto 0;
+  }
+  h2{
+    color:#ed5411;
+    font-size:.2rem; 
+    margin-top:.23rem;
+  }
+  // &>ul>li:nth-of-type(1){
+  //   margin-top:.23rem;
+  // }
+  .btn{
+    padding-top:.39rem;
+  }
+  .share_suc_share{
+    margin-top:.43rem;
+  }
+  ul ul li{
+    font-size:.2rem;
+    margin-top:.1rem;
+  }
+  // .active_content>li,.active_rule>li{
+  //   list-style-type: decimal;
+  //   list-style-position:inside;
+  // }
+  span{
+    margin-right: .2rem;
+  }
+}
+
+.first_orange{
+  margin-top:.4rem
+}
+.second_orange{
+  margin-top:.11rem;
+}
+.orange{
+  color:#e95412;
+  font-size:.2rem;
+  padding-left: .44rem;
+}
+.bottom_txt{
+  margin:.15rem auto 0;
+  border:3px solid #e95412;
+  color:#e95412;
+  font-size:.2rem;
+  height: 1.08rem;
+  line-height: 1.08rem;
+  width:83.54%;
+  div{
+    line-height: .29rem;
+    padding-left: .07rem;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer {
+  height: 1.00rem;
+  // line-height: 1.00rem;
+  background: #e89316;
+  margin-top: .29rem; }
+  .footer div {
+    color: white;
+    text-align: center;
+    font-size: .23rem;
+    line-height: .34rem;
+    font-weight: bold; }
+     .footer div:nth-of-type(1) {
+       padding-top: .22rem; }
+
+
+
+@mixin max-screen($res){
+  @media screen and ( max-width:$res )
+  {
+    @content;
+  }
+}
+
+@include max-screen(640px){
+  .header{
+    a:nth-child(1){
+      display:none;
+    }
+    a:nth-child(2){
+      display:block
+    }
+  }
+  .top_txt{
+    margin-top:.56rem;
+  }
+}
+
+
+/*@for $i from 630 to 320 {
+  @if $i % 10 == 0 {
+    @include max-screen($i + px){
+        //$j:(640-$i)/10 + 1;
+        $j:(640-$i)/10 * 2;
+        @if $j < 50 {
+          html{
+          font-size:100px - $j;
+        }
+        @if $i == 550 {
+          .btn a:nth-of-type(1) {
+            margin-right:.04rem;
+          }
+        }
+      }
+    }
+  }
+}
+*/
+
+@for $i from 630 to 320 {
+  @if $i % 6 == 0 {
+    @include max-screen($i + px){
+        $j:(640-$i)/10 * 1.7;
+        @if $j < 50 {
+          html{
+          font-size:100px - $j;
+        }
+      }
+    }
+  }
+}
+
+$width-small:  320px;
+$width-medium: 640px;
+$width-large:  960px;
+@mixin responsive($width) {
+    @if $width == wide-screens {
+        @media only screen and (max-width: $width-large) { @content; }
+    }
+    @else if $width == medium-screens {
+        @media only screen and (max-width: $width-medium) { @content; }
+    }
+    @else if $width == small-screens {
+        @media only screen and (max-width: $width-small) { @content; }
+    }
+}
+
+
+@include responsive(small-screens){
+  html{
+      font-size:50px;
+  }
+}
+

@@ -43,9 +43,8 @@
 
 以下均为我熟练使用的技能
 
-- Web开发：H5/javascript/Hack/Node
+- Web开发：H5/javascript
 - Web框架：jQuery
-- 前端框架：Bootstrap/AngularJS/EmberJS/HTML5/Cocos2dJS/ionic
 - 前端工具：Gulp/SaSS/LeSS/browser-sync/gulp-autoprefixer
 - 数据库相关：MySQL
 - 版本管理、文档和自动化部署工具：Svn/Git

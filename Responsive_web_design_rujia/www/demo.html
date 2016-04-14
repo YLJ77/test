@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+		
+	</script>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/constant.css">
+	<style>
+		.wrap{
+			width: 1210px;
+			margin: 0 auto;
+			position:relative;
+		}
+		ul{
+			position: absolute;
+			right:0;
+			top:0;
+			z-index:2;
+			background-color: white;
+		}
+		ul li{
+			float:left;
+			width: 58px;
+			height: 35px;
+			border-top:1px solid #999;
+			border-bottom:1px solid red;
+			text-align: center;
+			box-sizing: border-box;
+		}
+		ul li:first-child{
+			border-left: 1px solid #999;
+		}
+		ul li:first-child:hover div{
+			width: 58px;
+		}
+		ul li:last-child{
+			border-right: 1px solid #999;
+		}
+		ul li a{
+			text-align: center;
+			color:black;
+		/*	position: absolute;
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			margin:auto;*/
+		}
+		ul li:hover{
+			border-right: 1px solid red;
+			border-left: 1px solid red;
+			border-top: 3px solid red;
+		}
+		ul li:hover div{
+			border:none;
+			margin-top:9px;
+			width:56px;
+		}
+		ul li:hover a{
+			color:red;
+		}
+		ul li div{
+			border-right: 1px solid #ccc;
+			width: 58px;
+			margin-top:11px;
+		}
+		ul li:last-child div{
+			border:none;
+		}
+		#con{
+			width: 1210px;
+			height: 633px;
+			border:1px solid #ccc;
+			border-top:1px solid red;
+			position: absolute;
+			top:34px;
+		}
+		#con>div{
+			width: 1210px;
+			height: 633px;
+			position:absolute;
+		}
+		#con>div p{
+			width: 100px;
+			height: 100px;
+			font-size: 100px;
+			position:absolute;
+			top:0;
+			bottom:0;
+			left:0;
+			right:0;
+			background-color: white;
+			text-align: center;
+			line-height: 100px;
+			margin:auto;
+		}
+	</style>
+</head>
+<body>
+<div class="wrap clear">
+	<ul class="nav clear fr" id="nav">
+		<li>
+			<div><a href="#">大牌</a></div>
+		</li>
+		<li>
+			<div><a href="#">男装</a></div>
+		</li>
+		<li>
+			<div><a href="#">女装</a></div>
+		</li>
+		<li>
+			<div><a href="#">鞋靴</a></div>
+		</li>
+		<li>
+			<div><a href="#">箱包</a></div>
+		</li>
+		<li>
+			<div><a href="#">内衣配饰</a></div>
+		</li>
+		<li>
+			<div><a href="#">珠宝首饰</a></div>
+		</li>
+		<li>
+			<div><a href="#">奢品礼品</a></div>
+		</li>
+		<li>
+			<div><a href="#">奢华腕表</a></div>
+		</li>
+		
+	</ul>
+	<div id="con">
+		<div>
+			<p>1</p>
+		</div>
+		<div>
+			<p>2</p>
+		</div>
+		<div>
+			<p>3</p>
+		</div>
+		<div>
+			<p>4</p>
+		</div>
+		<div>
+			<p>5</p>
+		</div>
+		<div>
+			<p>6</p>
+		</div>
+		<div>
+			<p>7</p>
+		</div>
+		<div>
+			<p>8</p>
+		</div>
+		<div>
+			<p>9</p>
+		</div>
+	</div>
+</div>
+<script>
+	function change(){
+		var li = document.getElementById('nav').getElementsByTagName('li');
+		var con = document.getElementById('con').getElementsByTagName('div');
+		var self = this;
+		self.li = li;
+		self.con = con;
+		self.active = 1;
+		for(var i=0; i<li.length;i++){
+			li[i].index = i;
+			li[i].onmouseenter = function(){
+				 li[this.index].style.borderBottomColor = 'white';
+				 con[this.index].style.zIndex = self.active;
+				 self.active +=1;
+			}
+			li[i].onmouseleave = function(){
+				 li[this.index].style.borderBottomColor = 'red';
+				 //con[this.index].style.zIndex = 0;
+			}
+		}
+	}
+
+	change();
+</script>
+</body>
+</html>
