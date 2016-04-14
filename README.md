@@ -43,7 +43,7 @@
 
 以下均为我熟练使用的技能
 
-- Web开发：H5/javascript
+- Web开发：H5/javascript/hack
 - Web框架：jQuery
 - 前端工具：Gulp/SaSS/LeSS/browser-sync/gulp-autoprefixer
 - 数据库相关：MySQL
