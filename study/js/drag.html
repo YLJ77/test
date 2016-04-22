@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.wrap{
+			position: relative;
+			width: 600px;
+			height: 500px;
+			border:1px solid red;
+			margin:20px auto 0;
+		}
+		.drag{
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			background-color: orange;
+			top:0;
+			left:0;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap" id="wrap">
+		<div class="drag" id="drag"></div>
+	</div>
+	<script>
+		var wrap = document.getElementById('wrap');
+		var drag = document.getElementById('drag');
+		function Drag(wrap,drag){
+			drag.onmousedown = function(e){
+				var e = e || window.e;
+				var outsideX = e.clientX - drag.offsetLeft;
+				var outsideY = e.clientY - drag.offsetTop;
+
+				e.preventDefault?e.preventDefault():e.returnValue = false; 
+
+				drag.onmousemove = function(e){
+					var e = e || window.e;
+					var insideX = e.clientX - outsideX;
+					var insideY = e.clientY - outsideY;
+					var maxX = wrap.clientWidth - drag.clientWidth;
+					var maxY = wrap.clientHeight - drag.clientHeight;
+					e.preventDefault?e.preventDefault():e.returnValue = false; 
+
+					if(insideX < 0) insideX = 0;
+					if(insideX > maxX) insideX = maxX;
+					if(insideY < 0) insideY = 0;
+					if(insideY > maxY) insideY = maxY;
+
+					drag.style.left = insideX + 'px';
+					drag.style.top = insideY + 'px';
+				}
+
+				document.onmouseup = function(){
+					drag.onmousemove = null;
+				}
+			}
+		}
+
+		Drag(wrap,drag);
+	</script>
+</body>
+</html>

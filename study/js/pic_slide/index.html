@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		.clear{
+			zoom:1;
+		}
+		.clear:after{
+			content:'';
+			display:block;
+			clear:both;
+		}
+		.wrap{
+			position:relative;
+			width:750px;
+			margin:20px auto 0;
+		}
+		#slide{
+			width:750px;
+			overflow:hidden;
+		}
+		.pic{
+			width: 1500px;
+		}
+		.pic img{
+			width: 150px;
+			float:left;
+		}
+		.arrow{
+			position:absolute;
+			height: 50px;
+			top:0;
+			bottom:0;
+			margin:auto 0;
+			z-index: 100;
+			width:750px;
+		}
+		.arrow .left,.arrow .right{
+			width: 50px;
+			height: 50px;
+			color:white;
+			font-size: 36px;
+			line-height: 50px;
+			text-align: center;
+			background-color: black;
+			opacity:0.4;
+			cursor:pointer;
+		}
+		.arrow .left{
+			float:left;
+		}
+		.arrow .right{
+			float:right;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div id="slide">
+			<div class="pic clear" id="pic">
+				<img src="img/1.jpg" alt=""><img src="img/2.jpg" alt=""><img src="img/3.jpg" alt=""><img src="img/4.jpg" alt=""><img src="img/5.jpg"alt="">
+			</div>
+		</div>
+		<div class="arrow clear">
+			<div class="left" id="l_arr">&lt;</div>
+			<div class="right" id="r_arr">&gt;</div>
+		</div>
+	</div>
+	
+	<script>
+	function PicSlide(){
+		var pic = document.getElementById('pic');
+		var slide = document.getElementById('slide');
+		var l_arr = document.getElementById('l_arr');
+		var r_arr = document.getElementById('r_arr');
+		var self = this;
+		this.direction = true;
+		pic.innerHTML += pic.innerHTML;
+		slide.onmouseenter = function(){
+			clearInterval(self.time);
+		}
+		slide.onmouseleave = function(){
+			self.clock();
+		}
+		l_arr.onclick = function(){
+			clearInterval(self.time);
+			self.direction = true;
+			self.clock();
+		}
+		r_arr.onclick = function(){
+			clearInterval(self.time);
+			self.direction = false;
+			self.clock();
+		}
+
+		this.clock();
+	}
+	
+	PicSlide.prototype = {
+		move:function(slide,pic){
+			var time = this.time;
+			var self = this;
+			var direction = this.direction;
+			console.log(slide.scrollLeft);
+			this.direction ? increase() : reduce();
+			function increase(){
+				slide.scrollLeft++
+				if(slide.scrollLeft == pic.clientWidth / 2){
+					slide.scrollLeft = 0;
+				} 
+			}
+			function reduce(){
+				slide.scrollLeft--
+				if(slide.scrollLeft == 0){
+					slide.scrollLeft = 750;
+				} 
+			}
+			
+			if(slide.scrollLeft % 150 == 0){
+				clearInterval(this.time);
+				
+				this.time = setTimeout(function(){self.clock()},2000);
+				//this.time = setTimeout(self.clock,2000);
+			}
+		},
+		clock:function(){
+			var self = this;
+			clearInterval(this.time);
+			this.time = setInterval(function(){self.move(slide,pic)},10);
+		}
+	}
+		new PicSlide();
+	</script>
+</body>
+</html>

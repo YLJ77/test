@@ -87,8 +87,7 @@ function PicSlide(){
 		var list = self.list;
 		self.clear();
 		active = active > 0 ? active-1 : control.length - 1;
-		control[active].childNodes[0].className = 'active';
-		effect.animate(list[active],{'opacity':100});
+		self.select(control[active]);
 		self.active = active;
 		self.timer = setInterval(function(){self.run()},3000);
 	}
@@ -100,8 +99,7 @@ function PicSlide(){
 		var list = self.list;
 		self.clear();
 		active = active >= control.length - 1 ? 0 : active + 1;
-		control[active].childNodes[0].className = 'active';
-		effect.animate(list[active],{'opacity':100});
+		self.select(control[active]);
 		self.active = active;
 		self.timer = setInterval(function(){self.run()},3000);
 	}

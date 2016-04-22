@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin:0;padding:0;}
+		.wrap{
+			width: 600px;
+			height: 500px;
+			position: relative;
+			border:1px solid red;
+			margin:0 auto;
+		}
+		#ad{
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			margin:auto;
+			background-color:orange;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap" id="wrap">
+		<div id="ad"></div>
+	</div>
+	
+	<script>
+		function counter(){
+			var n = 0;
+			return {
+				count:function(){return n++;},
+				reset:function(){n=0;}
+			}
+		}
+		function Ad(){
+			var ad = document.getElementById('ad');
+			var wrap = document.getElementById('wrap');
+			var self = this;
+			this.ad = ad;
+			this.wrap = wrap;
+			this.left = counter();
+			this.top = counter();
+			this.boundary_x = true;
+			this.boundary_y = true;
+
+
+			ad.onmouseenter = function(){
+				clearInterval(self.time_1);
+				clearInterval(self.time_2);
+			}
+
+			ad.onmouseleave = function(){
+				self.runBoth();
+			}
+			//this.runBoth();
+		}
+
+		Ad.prototype = {
+			run_x:function(){
+				var ad = this.ad;
+				var wrap = this.wrap;
+				var left = this.left;
+				var boundary_x = this.boundary_x;
+				if(ad.offsetLeft == 0) boundary_x = true;
+				if(ad.offsetLeft == wrap.clientWidth - ad.clientWidth) boundary_x = false;
+				this.boundary_x = boundary_x;
+				boundary_x?left++:left--;
+				ad.style.left = left + 'px';
+				this.left = left;
+			},
+			run_y:function(){
+				var ad = this.ad;
+				var wrap = this.wrap;
+				var top = this.top;
+				var boundary_y = this.boundary_y;
+				if(ad.offsetTop == 0) boundary_y = true;
+				if(ad.offsetTop == wrap.clientHeight - ad.clientHeight) boundary_y = false;
+				this.boundary_y = boundary_y;
+				boundary_y?top++:top--;
+				ad.style.top = top + 'px';
+				this.top = top;
+			},
+			runBoth:function(){
+				var self = this;
+				this.time_1 = setInterval(function(){self.run_x()},1);
+				this.time_2 = setInterval(function(){self.run_y()},1);
+			}
+		}
+
+		new Ad;
+	</script>
+</body>
+</html>

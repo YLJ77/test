@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<style>
+*{padding:0;margin:0;}
+li{list-style:none;}
+.mod-slide{width:670px;height:240px;position:relative;margin:0 auto;}
+.mod-slide .slide-list{position:relative;top:0;left:0;}
+.mod-slide .slide-list li{position:absolute;top:0;left:0;}
+.mod-slide .slide-list img{width:670px;height:240px;}
+
+.mod-slide .mask{width:100%;height:30px;position:absolute;left:0;bottom:0;background:black;opacity:0.3;z-index:1;}
+.mod-slide .slide-controls{width:100%;height:26px;position:absolute;left:0;bottom:0;color:white;z-index:2;padding-top:2px;padding-bottom:2px;}
+.mod-slide .slide-controls li{display:inline-block;margin-right:3px;background:#999;width:24px;height:24px;border-radius:12px;text-align:center;}
+
+.mod-slide .slide-controls .active{background:red;}
+
+</style>
+<script src="base.js" type="text/javascript"></script>
+<script>
+function PicSlide(){
+var list=document.getElementById("list").getElementsByTagName("li");
+var controls=document.getElementById("controls").getElementsByTagName("li");
+var self=this;
+
+self.active=0;
+self.list=list;
+self.controls=controls;
+for(var i=0;i<controls.length;i++){
+    controls[i].index=i;
+	controls[i].onmouseover=function(){
+	    if(this.index===self.active) return;
+	    clearInterval(self.timer);
+		self.clear();
+		self.select(this);
+		//alert(this.childNodes[0].nodeValue);
+	}
+	
+	controls[i].onmouseout=function(){
+	    clearInterval(self.timer);
+		self.timer=setInterval(function(){self.run()},3000);
+	}
+}
+
+self.timer=setInterval(function(){self.run()},3000);
+
+}
+
+PicSlide.prototype={
+    select:function(target){
+	    target.className="active";
+	    this.active=target.index;
+	    effect.animate(this.list[target.index],{"opacity":100});
+		//effect.animate(list[target.index],{"opacity":100});
+	},
+	
+	clear:function(){
+	    var list=this.list;
+		var controls=this.controls;
+		var active=this.active;
+		
+		controls[active].className="";
+		effect.animate(list[active],{"opacity":0});
+	},
+	
+	run:function(){
+	    var list=this.list;
+		var controls=this.controls;
+		var active=this.active;
+		
+		this.clear();
+		active+=1;
+		active=active % controls.length;
+		controls[active].className="active";
+		effect.animate(list[active],{"opacity":100});
+		this.active=active;
+	}
+}
+</script>
+
+</head>
+<body>
+<div class="mod-slide" id="slide">
+    <ul class="slide-list" id="list">
+	    <li style="opacity:1"><a href="#"><img src="imgs_test/img1.jpg"/></a></li>
+		<li style="opacity:0"><a href="#"><img src="imgs_test/img2.jpg"/></a></li>
+		<li style="opacity:0"><a href="#"><img src="imgs_test/img3.jpg"/></a></li>
+		<li style="opacity:0"><a href="#"><img src="imgs_test/img4.jpg"/></a></li>
+	</ul>
+	
+	<ul class="slide-controls" id="controls">
+	    <li class="active">1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+	</ul>
+	
+	<div class="mask"></div>
+</div>
+<script>new PicSlide()</script>
+</body>
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

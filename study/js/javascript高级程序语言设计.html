@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>javascript高级程序语言设计</title>
+  <style>
+  h1{margin:0 auto;width:500px;}
+  #gototop{width:100px;height:100px;position:fixed;right:100px;bottom:100px;}
+  #gototop a{display:block;width:50px;height:50px;background:yellow;text-align:center;line-height:50px;}
+  dt{cursor:pointer;}
+  a{text-decoration:none;color:red;}
+  </style>
+  <script>
+      window.onload = function(){
+	      var dts = document.getElementsByTagName("dt");
+	      for(var i = 0; i < dts.length; i ++){
+		      dts[i].nextElementSibling.style.display = "none";
+			  (function(i){
+			      dts[i].onclick = function(){
+				       if(dts[i].nextElementSibling.style.display == "none"){
+					       dts[i].nextElementSibling.style.display = "block";
+					   }else{
+					       dts[i].nextElementSibling.style.display = "none";
+					   }
+				  }
+			  })(i);
+	      }
+		  
+		  var links_with_href = [];
+		  var links_with_name = [];
+		  var links = document.getElementsByTagName("a");
+		  
+		  for(var i = 0; i < links.length; i ++){
+		      if(links[i].hasAttribute("href")){
+			      links_with_href.push(links[i]);
+			  }else if(links[i].hasAttribute("name")){
+			      links_with_name.push(links[i]);
+			  }
+		  }
+		  
+		  for(var i = 1; i < links_with_href.length; i ++){
+		      (function(i){
+			      links_with_href[i].onclick = function(){
+				      var linkhref =links_with_href[i].getAttribute('href').substring(1);
+		              var patt = new RegExp(linkhref);
+					  for(var j = 1; j < links_with_href.length; j ++){
+					      links_with_name[j].nextElementSibling.style.backgroundColor = "";
+					  }
+				      if(patt.test(links_with_name[i].name)){
+					      links_with_name[i].nextElementSibling.style.backgroundColor = "orange";
+					  }
+				  }
+			  })(i);
+		  }
+	  }
+      
+  </script>
+</head>
+<body>
+  <h1><a name="top">javascript高级程序语言设计</a></h1>
+  <div id = "gototop"><a href = "#top">Top</a></div>
+  <dl>
+    <dl>
+	  <dt>第五章引用类型</dt>
+	  <dl>
+	    <dd><a href="#5.1Object类型">5.1Object类型</a></dd>
+		<dd><a href="#5.2Array类型">5.2Array类型</a></dd>
+		<dd><a href="#5.2.1检测数组">5.2.1检测数组</a></dd>
+		<dd><a href="#5.2.3栈方法">5.2.3栈方法</a></dd>
+		<dd><a href="#5.2.4队列方法">5.2.4队列方法</a></dd>
+	  </dl>
+	</dl>
+	
+	
+  </dl>
+  <hr/>
+  <a name="5.1Object类型">5.1Object类型</a>
+  <pre>
+    创建Object实例的方式有两种。第一种是使用new操作符后跟Object构造函数，如下所示：
+	
+	var person = new Object();
+	person.name = "Nicholas";
+	person.age= 20;
+	
+	另一种方式是使用对象自面量表示法。
+	
+	var person = {
+	    name : "Nicholas",
+		age : 20
+	};
+	
+	在使用面向对象字面量语法时，属性名也可以使用字符串。
+	
+	var person = {
+	    "name" = "Nicholas",
+		"age" = 29,
+		5 : true
+	}
+	
+	另外，使用对象字面量语法时，如果留空其花括号，则可以定义只包含默认属性和方法的对象。
+	
+	var person = {};                //与new Object()相同
+	person.name = "Nicholas";
+	person.age = 20;
+  </pre>
+  
+  <hr/>
+  <a name="5.2Array类型">5.2Array类型</a>
+  <pre>
+    创建数组的基本方式有两种。第一种是使用Array构造函数。
+	
+	var colors = new Array();
+	
+	var colors = new Array(20);                    //创建一个包含3项的数组
+	
+	var colors = new Array("red","blue","green");  //创建一个包含3项，即字符串"red","blue","green"的数组
+	
+	在使用Array构造函数时也可以省略new操作符。
+  </pre>
+  
+  <hr/>
+  <a name="5.2.1检测数组">5.2.1检测数组</a>
+  <pre>
+    if (value instanceof Array){
+	    //对数组执行某些操作
+	}
+	
+	if (Array.isArray(value)) {
+	    //对数组执行某些操作
+	}
+  </pre>
+  
+  <hr/>
+  <a name="5.2.3栈方法">5.2.3栈方法</a>
+  <pre>
+    var colors = new Array();
+    var count = colors.push("red","green");    //推入两项
+    alert(cound);                              //2
+	
+	var item = colors.pop();                   //取得最后一项
+	alert(item);                               //"green"
+	alert(colors.length);                      //1
+  </pre>
+  
+  </hr>
+  <a name="5.2.4队列方法">5.2.4队列方法</a>
+  <pre>
+    var colors = new Array();
+    var count = colors.push("red","green");    //推入两项
+	
+	var item  = colors.shift();                //取得第一项
+	alert(item);                               //"red"
+	alert(colors.length);                      //1
+	
+	var count = colors.unshift("yellow","blue");//推入两项
+	alert(count);                               //3
+  </pre>
+</body>
+</html>

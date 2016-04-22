@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		.clear{
+			zoom:1;
+		}
+		.clear:after{
+			content:'';
+			display:block;
+			clear:both;
+		}
+		.wrap{
+			position:relative;
+			width:500px;
+			margin:20px auto 0;
+		}
+		#slide{
+			width:500px;
+			overflow:hidden;
+		}
+		.pic{
+			width: 5000px;
+		}
+		.pic img{
+			float:left;
+		}
+		.arrow{
+			position:absolute;
+			height: 50px;
+			top:0;
+			bottom:0;
+			margin:auto 0;
+			z-index: 100;
+			width:500px;
+		}
+		.arrow .left,.arrow .right{
+			width: 50px;
+			height: 50px;
+			color:white;
+			font-size: 36px;
+			line-height: 50px;
+			text-align: center;
+			background-color: black;
+			opacity:0.4;
+			cursor:pointer;
+		}
+		.arrow .left{
+			float:left;
+		}
+		.arrow .right{
+			float:right;
+		}
+		.circle{
+			position: absolute;
+			width: 90px;
+			bottom:10px;
+			left:0;
+			right:0;
+			margin:0 auto;
+		}
+		.circle li{
+			list-style:none;
+			float:left;
+			width:10px;
+			height:10px;
+			border-radius: 5px;
+			background-color:#ccc;
+			margin-right: 10px;
+		}
+		.circle li:last-child{
+			margin-right: 0;
+		}
+		.circle .active{
+			background-color:orange;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div id="slide">
+			<div class="pic clear" id="pic">
+				<img src="img/1.jpg" alt=""><img src="img/2.jpg" alt=""><img src="img/3.jpg" alt=""><img src="img/4.jpg" alt=""><img src="img/5.jpg"alt="">
+			</div>
+		</div>
+		<div class="arrow clear">
+			<div class="left" id="l_arr">&lt;</div>
+			<div class="right" id="r_arr">&gt;</div>
+		</div>
+		<ul class="circle clear" id="circle">
+			<li class="active"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+	
+	<script>
+	function PicSlide(){
+		var pic = document.getElementById('pic');
+		var slide = document.getElementById('slide');
+		var l_arr = document.getElementById('l_arr');
+		var r_arr = document.getElementById('r_arr');
+		var controls = document.getElementById('circle').getElementsByTagName('li');
+		var self = this;
+		this.active = 0;
+		this.controls = controls;
+		this.pic = pic;
+		this.slide = slide;
+		this.goLeft = true;
+		pic.innerHTML += pic.innerHTML;
+		l_arr.onclick = function(){
+			clearInterval(self.time);
+			self.goLeft = true;
+			self.clear();
+			self.active = self.active > 0 ? self.active - 1 : self.controls.length-1;
+			self.select(self.controls[self.active]);
+			self.time = setTimeout(function(){self.clock();},2000);
+		}
+		r_arr.onclick = function(){
+			clearInterval(self.time);
+			self.goLeft = false;
+			self.clear();
+			self.active += 1;
+			self.active %= self.controls.length;
+			self.select(self.controls[self.active]);
+			self.time = setTimeout(function(){self.clock();},2000);
+		}
+
+		for(var i=0;i<controls.length;i++){
+			controls[i].index = i;
+
+			controls[i].onmouseenter = function(){
+				if(self.active == this.index) return;
+				clearInterval(self.time);
+				self.clear();
+				self.select(this);
+			}
+			controls[i].onmouseleave = function(){
+				clearInterval(self.time);
+				self.clock();
+			}
+		}
+		this.time = setTimeout(function(){self.clock()},2000);
+	}
+	
+	PicSlide.prototype = {
+		move:function(slide,pic){
+			var time = this.time;
+			var self = this;
+			var controls = this.controls;
+			var active = this.active;
+			var slide = this.slide;
+				if(!self.goLeft){
+					slide.scrollLeft--
+					if(slide.scrollLeft == 0) slide.scrollLeft = 2500;
+				}else{
+					slide.scrollLeft++;
+					if(slide.scrollLeft == 2500) slide.scrollLeft = 0;
+				}
+			if(slide.scrollLeft % 500 == 0){
+				clearInterval(this.time);
+				self.clear();
+				
+				if(self.goLeft){
+					self.active += 1;
+					self.active %= self.controls.length;
+				}else{
+					self.active = self.active > 0 ? self.active - 1 : self.controls.length-1;
+				}
+				
+				console.log(self.active);
+				self.controls[self.active].className = 'active';
+					
+				
+				this.time = setTimeout(function(){
+					self.clock();
+				},2000);
+				//this.time = setTimeout(self.clock,2000);
+			}
+		},
+		clock:function(){
+			var self = this;
+			clearInterval(this.time);
+			this.time = setInterval(function(){self.move(slide,pic)},1);
+		},
+		clear:function(){
+			var controls = this.controls;
+			var active = this.active;
+			controls[active].className = '';
+			//alert(active);
+		},
+		select:function(target){
+			var controls = this.controls;
+			var slide = this.slide;
+			this.active = target.index;
+			controls[target.index].className = 'active';
+			slide.scrollLeft = slide.clientWidth * target.index;
+		}
+
+	}
+		new PicSlide();
+	</script>
+</body>
+</html>
