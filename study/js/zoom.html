@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>zoom</title>
+	<style>
+		#obj{
+			position:relative;
+			width: 200px;
+			height: 200px;
+			float:left;
+		}
+		#obj img{
+			width: 200px;
+			height: 200px;
+		}
+		#drag{
+			position:absolute;
+			width: 100px;
+			height: 100px;
+			display:none;
+			opacity:0.4;
+			background-color:white;
+		}
+		#rightShow{
+			float:left;
+			width: 250px;
+			height: 250px;
+			overflow:hidden;
+			display:none;
+		}
+		#rightShow img{
+			width: 500px;
+			height: 500px;
+		}
+	</style>
+</head>
+<body>
+	<div id="obj">
+		<img src="imgs_test/img6.jpg" alt="" id="leftImg">
+		<idv id="drag"></idv>
+	</div>
+	<div id="rightShow">
+		<img src="imgs_test/img6.jpg" alt="" id="rightImg">
+	</div>
+
+	<script>
+		var obj = document.getElementById('obj');
+		var leftImg = document.getElementById('leftImg');
+		var drag = document.getElementById('drag');
+		var rightShow = document.getElementById('rightShow');
+		var rightImg = document.getElementById('rightImg');
+
+		obj.onmousemove = function(e){
+			var e = e || window.e;
+			drag.style.display = 'block';
+			rightShow.style.display = 'block';
+
+			var x_pos = e.clientX - obj.offsetLeft - drag.clientWidth/2;
+			var y_pos = e.clientY - obj.offsetTop - drag.clientHeight/2;
+			var maxX = obj.clientWidth - drag.clientWidth;
+			var maxY = obj.clientHeight - drag.clientHeight;
+
+			if(x_pos < 0) x_pos = 0;
+			if(y_pos < 0) y_pos = 0;
+			if(x_pos > maxX) x_pos = maxX;
+			if(y_pos > maxY) y_pos = maxY;
+
+			drag.style.left = x_pos + 'px';
+			drag.style.top = y_pos + 'px';
+
+			var multiple = rightImg.offsetWidth / leftImg.offsetWidth;
+			rightShow.scrollLeft = drag.offsetLeft * multiple;
+			rightShow.scrollTop = drag.offsetTop * multiple;
+		}
+
+		obj.onmouseout = function(){
+			drag.style.display = null;
+			rightShow.style.display = null;
+		}
+	</script>
+</body>
+</html>
