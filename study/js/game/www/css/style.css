@@ -1,0 +1,12 @@
+@import url(reset.css);
+@import url(constant.css);
+.wrap {
+  position: relative;
+  width: 320px;
+  height: 480px;
+  background: url(../img/game_bg.jpg) no-repeat; }
+
+#wolf {
+  position: absolute;
+  top: 115px;
+  left: 95px; }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	body{
+		width: 100%;
+	}
+		#div{
+			width: 50px;
+			height: 50px;
+			background-color: #33e;
+			margin: 0 200px;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div id="div"></div>
+	<input type="button" name="" id="btn" value="star">
+	<script>
+		var step = 10;
+		var div = document.getElementById('div');
+		var btn = document.getElementById('btn');
+		var time;
+		var i=0;
+
+		btn.onclick=function(){
+			if(time){
+				clearInterval('time');
+			}
+			time = setInterval(move,10);
+		}
+
+		function move(){
+			var  num = Math.ceil(Math.sin(i*Math.PI/180)*step+10);
+			div.style.marginTop = num +'px';
+			i+=3;
+		}
+	</script>
+	
+</body>
+</html>
