@@ -4,23 +4,43 @@ function Beat(){
 	var src_bad = ["h0","h1","h2","h3","h4","h5","h6","h7","h8","h9"];
 	var src_kind = ["x0","x1","x2","x3","x4","x5","x6","x7","x8","x9"];
 	var wolf = document.getElementById("wolf");
+	var time = document.getElementById('time');
 	var self = this;
 	this.index = 0;
 	this.src_bad = src_bad;
 	this.src_kind = src_kind;
 	this.src = src_bad;
 	this.wolf = wolf;
+	this.score = 0;
+	this.time = time;
+	this.clicked = true;
 
 	wolf.onclick = function(){
-		clearTimeout(self.timer);
-		self.timer2 = setInterval(function(){self.hited()}, 50)
+		var score = self.score;
+		var src = self.src;
+		var src_bad = self.src_bad;
+		var src_kind = self.src_kind;
+		var box = document.getElementById('score');
+		var clicked = self.clicked;
+		
+		if(clicked) {
+			clearTimeout(self.timer);
+			clearInterval(self.timer2);
+			self.timer2 = setInterval(function(){self.hited()}, 50)
+			src == src_bad ? score += 10 : score -= 10;
+			box.innerText = score;
+			self.score = score;
+		}
 	}
 
 	this.clock(this);
+	this.timer3 = setInterval(function(){self.counter(self);},333);
 }
 Beat.prototype = {
 	clock : function(obj){
 		var self = this;
+		clearTimeout(self.timer);
+		clearInterval(self.timer2);
 		setTimeout(function(){			
 			obj.timer = setTimeout(arguments.callee,50);
 			self.show(self);
@@ -43,26 +63,44 @@ Beat.prototype = {
 			src = num2 ? src_bad : src_kind;
 			this.src = src;
 		}
-		wolf.style.display = "block";
 		wolf.src = "img/" + src[index] + ".png";
 		if(index > 4) hit = true;
-		if(index == 0) hit = false;
-		hit ? index-- : index++
+		if(index == 0) {
+			hit = false;
+			this.clicked = true;
+		}
+		hit ? index-- : index++;
 		this.index = index;
 	},
 	hited : function(obj){
 		var index = this.index;
 		var src = this.src;
 		var wolf = this.wolf;
+		this.clicked = false;
 		index++;
+		this.clicked = false;
 		if(index >= src.length - 1) {
 			clearInterval(this.timer2);
 			this.clock(this);
 		}
-		console.log(index);
 		wolf.src = "img/" + src[index] + ".png";
 		this.index = index;
 
+	},
+	counter : function(obj){
+		var time = this.time;
+		var wolf = this.wolf;
+		width = time.currentStyle ? time.currentStyle['width'] : getComputedStyle(time,false)['width'];
+		width = parseInt(width);
+		if(width == 0) {
+			clearInterval(obj.timer3);
+			clearInterval(obj.timer2);
+			clearTimeout(obj.timer);
+			wolf.style.display = "none";
+		} else {
+			width--
+		}
+		time.style['width'] = width + 'px';
 	},
 	stop : function(obj){
 		clearTimeout(obj.timer);
