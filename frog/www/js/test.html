@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="move.js"></script>
+		<style>
+			div{display:inline-block;}
+			/*div{
+				float:left;
+			}*/
+			.box{
+				position: relative;
+				top:100px;
+				height: 29px;
+				width: 70px;
+				background-color: orange;
+			}
+			.leftqw .inner{
+				position: relative;
+				
+			}
+			.inner{
+				width: 100%;
+				    height: 70px;
+				    position: absolute;
+				    bottom: 65px;
+				    background:url(../img/qingwa.png);
+				    background-size:300% auto;
+				    left:0;
+				    top:-65px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box leftqw">
+			<div class="inner"></div>
+		</div>
+		<div class="box">
+			<div class="inner" id="inner"></div>
+		</div>
+	<script type="text/javascript">
+		// var inner = document.getElementById('inner');
+		// effect.animate(inner,{'left':300},{'tween_type':'Quad','ease_type':'easeIn','duration':100},function(){
+		// 	effect.animate(inner,{'top':300},{'tween_type':'Quad','ease_type':'easeOut','duration':100});
+		// });
+	</script>
+</body>
+</html>

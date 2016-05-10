@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#main{
+			position:relative;
+			margin:0 auto;
+		}
+		#main div{
+			position: absolute;
+			width: 200px;
+			background-color: orange;
+			transition:1s;
+		}
+	</style>
+	
+</head>
+<body>
+	<div id="main">
+	</div>
+	<script>
+		var oMain = document.getElementById('main');
+		var divs = [];
+		var heights = [];
+
+		function create(n1,n2){
+			for(var i=n1; i < n2; i++) {
+				var oDiv = document.createElement('div');
+				oDiv.innerHTML = i;
+				oDiv.style.height = fnRand(100,300) + 'px';
+				oMain.appendChild(oDiv);
+				divs[i] = oDiv;
+			}
+			arrange();
+		}
+
+		function fnRand(m,n) {
+		    var r = Math.round(Math.random()*(n-m) + m);
+		    return r;
+		}
+
+		function arrange() {
+			var screenWidth = document.body.offsetWidth;
+			var l = 0;
+			var t = 0;
+			var MainWidth = 0;
+			var isFirst = true;
+			var divWidth = divs[0].offsetWidth;
+
+			for (var i = 0; i< divs.length; i++) {
+				if (l+divs[i].offsetWidth >= screenWidth) {
+					MainWidth = l;
+					l = 0;
+					isFirst = false;
+				}
+
+				if (isFirst) {
+					divs[i].style.top = t + 'px';
+					divs[i].style.left = l + 'px';
+					heights[i] = divs[i].offsetHeight;
+				} else {
+					var min = Math.min.apply(null,heights);
+					for (var k = 0; k < heights.length; k++) {
+						if (min == heights[k]) {
+							divs[i].style.left = k*(divWidth+10)+'px';
+							divs[i].style.top = min+10+'px';
+							heights[k] += divs[i].offsetHeight+10;
+							break;
+						}
+					}
+				}
+
+				l += divs[i].offsetWidth + 10;
+			}
+			oMain.style.width = MainWidth + 'px';
+		}
+
+		window.onresize = function(){
+			heights.splice(0, heights.length)
+			arrange();
+		}
+		
+		window.onscroll = function(){
+			// 可视区高度
+			var windowHeight = document.documentElement.clientHeight;
+			//滚动条的高度
+			var max=Math.max.apply(null,heights);
+			var srcollTop = document.documentElement.scrollTop || document.body.scrollTop;
+			if (srcollTop+windowHeight >= max-20) {
+				// alert('到底了');
+				var num=divs.length;
+				create(num,num+heights.length);
+			};
+
+		}
+
+		create(0,30);
+	</script>
+</body>
+</html>

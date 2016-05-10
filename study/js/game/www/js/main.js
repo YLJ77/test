@@ -1,5 +1,3 @@
-
-
 function Beat(){
 	var src_bad = ["h0","h1","h2","h3","h4","h5","h6","h7","h8","h9"];
 	var src_kind = ["x0","x1","x2","x3","x4","x5","x6","x7","x8","x9"];

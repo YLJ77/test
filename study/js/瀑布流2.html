@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		#main{
+			position:relative;
+			margin:0 auto;
+		}
+		#main div{
+			position: absolute;
+			background-color: yellow;
+			width: 200px;
+			transition:1s;
+		}
+	</style>
+</head>
+<body>
+	<div id="main"></div>
+	<script>
+		function Flow(){
+			var main = document.getElementById('main');
+			var self = this;
+			this.main = main;
+			this.divs = [];
+			this.heights = [];
+
+			window.onresize = function(){
+				self.heights.splice(0,self.heights.length);
+				self.arrange();
+			}
+
+			window.onscroll = function(){
+				//client height
+				var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				var scrollTop = document.body.scrollTop;
+				var scrollHeight = document.body.scrollHeight;
+				if(scrollTop+clientHeight >= scrollHeight - 20) {
+					var num = self.divs.length;
+					self.create(num,num+self.heights.length);
+				}
+			}
+
+			this.create(0,20);
+		}
+
+		Flow.prototype = {
+			create: function(n1,n2){
+				var main = this.main;
+				var divs = this.divs;
+				
+				for(var i=n1; i<n2; i++){
+					var div = document.createElement('div');
+					var height = this.rand(200,300);
+					div.style.height = height + 'px';
+					div.innerHTML = i;
+					main.appendChild(div);
+					divs[i] = div;
+				}
+				this.arrange();
+			},
+			arrange: function(){
+				var divs = this.divs;
+				var heights = this.heights;
+				var top = 0;
+				var left = 0;
+				var mainWidth = 0;
+				var main = this.main;
+				var firstLine = true;
+				var pageWidth = document.body.offsetWidth;
+
+				for(var i=0; i<divs.length; i++){
+					if(left+divs[i].offsetWidth >= pageWidth) {
+						mainWidth = left;
+						firstLine = false;
+						left = 0;
+					}
+
+					if(firstLine){
+						divs[i].style.left = left + 'px';
+						divs[i].style.top = top + 'px';
+						heights[i] = divs[i].offsetHeight;
+					} else {
+						var min = Math.min.apply(null,heights);
+						for(var j=0; j<heights.length; j++){
+							if(min == heights[j]){
+								divs[i].style.left = j * (divs[i].offsetWidth + 10) + 'px';
+								// divs[i].style.left = divs[j].offsetLeft + 'px';
+								divs[i].style.top = min + 10 + 'px';
+								heights[j] += divs[i].offsetHeight + 10;
+								break;
+							}
+						}
+					}
+					left+= divs[i].offsetWidth + 10;
+				}
+				main.style.width = mainWidth + 'px';
+				var max = Math.max.apply(null,heights);
+				main.style.height = max + 'px';
+
+			},
+			rand: function(m,n){
+				var r = Math.ceil(Math.random() * (n-m) + m);
+				return r;
+			},
+		}
+
+		new Flow();
+	</script>
+</body>
+</html>
