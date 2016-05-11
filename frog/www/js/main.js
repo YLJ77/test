@@ -2,24 +2,33 @@ function Frog(){
 	var time = document.getElementById('time');
 	var box = document.getElementById('box');
 	var restart = document.getElementById('restart');
-	var wrap = document.getElementById('wrap');
 	var win_info = document.getElementById('win_info');
 	var frog_sound = document.getElementById('frog_sound');
+	var share = document.getElementById('share');
+	var share_pic = document.getElementById('share_pic');
+	var share_box = document.getElementById('share_box');
 	var dock = box.children;
 	var self = this;
+
 	time.sec = 0;
 	time.timer = null;
 	self.time = time;
 	self.win_info = win_info;
 	self.box = box;
 	self.restart();
-	EventUtil.addHandler(wrap,'click',function(event){
+
+	EventUtil.addHandler(document,'click',function(event){
 		event = EventUtil.getEvent(event);
 		var target = EventUtil.getTarget(event);
-
 		switch(target.id) {
 			case 'restart':
 				self.restart();
+				break;
+			case 'share':
+				share_box.style.display = 'block';
+				break;
+			case 'share_pic':
+				share_box.style.display = 'none';
 				break;
 		}
 
