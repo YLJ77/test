@@ -30,19 +30,16 @@
 		var drag = document.getElementById('drag');
 		function Drag(wrap,drag){
 			drag.onmousedown = function(e){
-				var e = e || window.e;
+				var e = e || window.event;
 				var outsideX = e.clientX - drag.offsetLeft;
 				var outsideY = e.clientY - drag.offsetTop;
 
-				e.preventDefault?e.preventDefault():e.returnValue = false; 
-
 				drag.onmousemove = function(e){
-					var e = e || window.e;
+					var e = e || window.event;
 					var insideX = e.clientX - outsideX;
 					var insideY = e.clientY - outsideY;
 					var maxX = wrap.clientWidth - drag.clientWidth;
 					var maxY = wrap.clientHeight - drag.clientHeight;
-					e.preventDefault?e.preventDefault():e.returnValue = false; 
 
 					if(insideX < 0) insideX = 0;
 					if(insideX > maxX) insideX = maxX;

@@ -48,7 +48,9 @@ body {
   top: 45px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.5);
-  display: none; }
+  display: none;
+  width: 92px;
+  height: 12px; }
 
 #box {
   position: absolute;

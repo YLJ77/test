@@ -1,0 +1,164 @@
+@import url(reset.css);
+.clear {
+  zoom: 1; }
+
+.clear:after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+  overflow: hidden; }
+
+.fl {
+  float: left; }
+
+.fr {
+  float: right; }
+
+.wrap {
+  width: 400px;
+  height: 600px;
+  margin: 0 auto;
+  background: url(../img/bg_day.png) no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  overflow: hidden; }
+
+#start_logo {
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 50px;
+  margin: auto;
+  width: 218px; }
+
+#start_logo div {
+  float: left; }
+
+#start_logo .text {
+  width: 178px;
+  height: 48px;
+  background: url(../img/title.png) no-repeat; }
+
+#start_logo #logo_bird {
+  width: 40px;
+  height: 26px;
+  margin-top: 11px;
+  background: url(../img/bird0.png); }
+
+.btn {
+  position: absolute;
+  bottom: 110px;
+  width: 210px;
+  height: 29px;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+.btn div {
+  float: left; }
+
+.btn #start {
+  width: 85px;
+  height: 29px;
+  background: url(../img/start.jpg);
+  margin-right: 40px; }
+
+.btn #score {
+  width: 85px;
+  height: 29px;
+  background: url(../img/score.jpg); }
+
+#land {
+  width: 800px;
+  position: absolute;
+  bottom: 0px;
+  height: 80px;
+  background: url(../img/land.png); }
+
+.landanim {
+  -webkit-animation-name: landanim;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite; }
+
+@-webkit-keyframes landanim {
+  0% {
+    left: 0; }
+  100% {
+    left: -400px; } }
+
+#get_ready_view {
+  display: none; }
+
+#score_num {
+  display: block;
+  margin: 100px auto 0; }
+
+.get_ready, .tip {
+  display: block;
+  margin: 30px auto 0; }
+
+#bird {
+  width: 40px;
+  height: 26px;
+  position: absolute;
+  left: 20px;
+  top: 300px;
+  display: none;
+  z-index: 999;
+  background: url(../img/bird0.png);
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: .2s; }
+
+#bird.bird_up {
+  height: 29px;
+  -webkit-animation-name: bird_up; }
+
+@-webkit-keyframes bird_up {
+  0% {
+    background: url("../img/up_bird0.png"); }
+  100% {
+    background: url("../img/up_bird1.png"); } }
+
+#bird.bird_down {
+  height: 30px;
+  -webkit-animation-name: bird_down; }
+
+@-webkit-keyframes bird_down {
+  0% {
+    background: url("../img/down_bird0.png"); }
+  100% {
+    background: url("../img/down_bird1.png"); } }
+
+.pipe_up {
+  position: absolute;
+  top: 0;
+  display: none; }
+
+.pipe_up .pipe_up_body {
+  width: 62px;
+  background: url(../img/up_mod.png); }
+
+.pipe_up .pipe_head {
+  width: 62px;
+  height: 60px;
+  background: url(../img/up_pipe.png); }
+
+.pipe_down {
+  position: absolute;
+  bottom: 80px;
+  display: none; }
+
+.pipe_down .pipe_down_body {
+  width: 62px;
+  background: url(../img/down_mod.png); }
+
+.pipe_down .pipe_head {
+  width: 62px;
+  height: 60px;
+  background: url(../img/down_pipe.png); }
+
+.display {
+  display: block; }

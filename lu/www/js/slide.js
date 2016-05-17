@@ -1,59 +1,59 @@
-var attribute = {
-	get:function(elem,attr){
-		var val;
-		if(elem.currentStyle){
-			val = elem.currentStyle[attr];
-		} else{
-			val = getComputedStyle(elem,false)[attr];
-		}
-		if(attr === "opacity"){
-			val = val * 100;
-		}
-		return val;
-	},
-	set:function(elem,attr,val){
-		if(attr === "opacity"){
-			elem.style.opacity = (val) / 100;
-			elem.style.filter = 'alpha(opacity='+(val)+')';
-		}else{
-			elem.style[attr] = val + 'px';
-		}
-	}
-}
+// var attribute = {
+// 	get:function(elem,attr){
+// 		var val;
+// 		if(elem.currentStyle){
+// 			val = elem.currentStyle[attr];
+// 		} else{
+// 			val = getComputedStyle(elem,false)[attr];
+// 		}
+// 		if(attr === "opacity"){
+// 			val = val * 100;
+// 		}
+// 		return val;
+// 	},
+// 	set:function(elem,attr,val){
+// 		if(attr === "opacity"){
+// 			elem.style.opacity = (val) / 100;
+// 			elem.style.filter = 'alpha(opacity='+(val)+')';
+// 		}else{
+// 			elem.style[attr] = val + 'px';
+// 		}
+// 	}
+// }
 
-var effect = {
-	animate:function(elem,json,fn){
-		clearTimeout(elem.timer);
-		setTimeout(function(){
-			effect.change(elem,json,fn);
-			elem.timer = setTimeout(arguments.callee,30);
-		},30)
-	},
-	stop:function(elem){
-		clearTimeout(elem.timer);
-	},
-	change:function(elem,json,fn){
-		var attr = null;
-		var speed = 0;
-		var complete = false;
-		var cur = 0;
-		for(attr in json){
-			cur = parseInt(parseFloat(attribute.get(elem,attr))) || 0;
-			if(cur == json[attr]){
-				complete = true;
-				break;
-			}
-			speed = (json[attr] - cur) / 8;
-			speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
-			cur += speed;
-			attribute.set(elem,attr,cur);
-		}
-		if(complete){
-			effect.stop(elem);
-			if(fn) fn();
-		}
-	}
-}
+// var effect = {
+// 	animate:function(elem,json,fn){
+// 		clearTimeout(elem.timer);
+// 		setTimeout(function(){
+// 			effect.change(elem,json,fn);
+// 			elem.timer = setTimeout(arguments.callee,30);
+// 		},30)
+// 	},
+// 	stop:function(elem){
+// 		clearTimeout(elem.timer);
+// 	},
+// 	change:function(elem,json,fn){
+// 		var attr = null;
+// 		var speed = 0;
+// 		var complete = false;
+// 		var cur = 0;
+// 		for(attr in json){
+// 			cur = parseInt(parseFloat(attribute.get(elem,attr))) || 0;
+// 			if(cur == json[attr]){
+// 				complete = true;
+// 				break;
+// 			}
+// 			speed = (json[attr] - cur) / 8;
+// 			speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+// 			cur += speed;
+// 			attribute.set(elem,attr,cur);
+// 		}
+// 		if(complete){
+// 			effect.stop(elem);
+// 			if(fn) fn();
+// 		}
+// 	}
+// }
 
 function PicSlide(){
 	var list = document.getElementById('lists').getElementsByTagName('li');
@@ -111,11 +111,12 @@ PicSlide.prototype = {
 	select:function(target){
 		this.active = target.index;
 		this.control[this.active].childNodes[0].className = 'active';
-		effect.animate(this.list[target.index],{'opacity':100});
+		effect.animate(this.list[target.index],{'opacity':100},{'tween_type':'Quad','ease_type':'easeIn','duration':30});
 	},
 	clear:function(){
 		this.control[this.active].childNodes[0].className = "";
-		effect.animate(this.list[this.active],{'opacity':0});
+		//effect.animate(this.list[this.active],{'opacity':0});
+		effect.animate(this.list[this.active],{'opacity':0},{'tween_type':'Quad','ease_type':'easeIn','duration':30});
 	},
 	run:function(){
 		var active = this.active;
@@ -125,7 +126,9 @@ PicSlide.prototype = {
 		active +=1;
 		active = active % control.length;
 		control[active].childNodes[0].className = 'active';
-		effect.animate(list[active],{'opacity':100});
+		//effect.animate(list[active],{'opacity':100});
+		effect.animate(list[active],{'opacity':100},{'tween_type':'Quad','ease_type':'easeIn','duration':30});
+
 		this.active = active;
 	}
 }

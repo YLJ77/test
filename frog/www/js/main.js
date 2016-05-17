@@ -17,9 +17,11 @@ function Frog(){
 	self.box = box;
 	self.restart();
 
-	EventUtil.addHandler(document,'click',function(event){
-		event = EventUtil.getEvent(event);
-		var target = EventUtil.getTarget(event);
+	
+
+	handler = function(event){
+		event = event || window.event;
+		var target = event.target || event.srcElement;
 		switch(target.id) {
 			case 'restart':
 				self.restart();
@@ -37,8 +39,10 @@ function Frog(){
 				if(time.sec == 0){
 					clearInterval(time.timer);
 					time.style.display = 'block';
-					time.innerText = "用时： 0秒";
-					time.timer = setInterval(self.timing, 1000);
+					setTimeout(function(){
+						self.timing();
+						time.timer = setInterval(self.timing, 10);
+					}, 0)
 				}
 				[].forEach.call(dock,function(dock){
 					dock.firstElementChild.className = 'qw';
@@ -83,19 +87,32 @@ function Frog(){
 					count +=1;
 				}
 				if(count == 4) {
-					win_info.innerHTML = '哇!你用了<span style="color:#f30">'+(time.sec-1)+'</span>秒通过了游戏,赶快分享到朋友圈，和朋友们PK一下吧！'
+					win_info.innerHTML = '哇!你用了<span style="color:#f30">'+((time.sec-1)/100)+'</span>秒通过了游戏,赶快分享到朋友圈，和朋友们PK一下吧！'
 					win_info.style.display = 'block';
 					clearInterval(time.timer);
 				}
 				break;
 		}
-	});
+	};
+
+	var device = this.browserRedirect();
+
+
+	if(document.addEventListener) {
+		device == 'phone'? document.addEventListener('touchstart',handler,false):document.addEventListener('click',handler,false);
+	} else if (document.attachEvent) {
+		device == 'phone'? document.attachEvent('ontouchstart' , handler):document.attachEvent('onclick' , handler);
+	} else {
+		device == 'phone'? document['ontouchstart'] = handler:document['onclick'] = handler;
+	}
+
+
 }
 
 Frog.prototype = {
 	timing: function(){
 		var time = this.time;
-		time.innerText = "用时： "+time.sec+"秒";
+		time.innerText = "用时： "+(time.sec)/100+"秒";
 		time.sec += 1;
 	},
 	restart: function(){
@@ -126,5 +143,22 @@ Frog.prototype = {
 				box.appendChild(div);;
 			}
 		}
+	},
+	browserRedirect: function(){
+		var sUserAgent = navigator.userAgent.toLowerCase();
+		var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+		var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+		var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+		var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+		var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+		var bIsAndroid = sUserAgent.match(/android/i) == "android";
+		var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+		var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+		if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+		    return 'phone';
+		} else {
+		    return 'pc';
+		}
 	}
 }
+
