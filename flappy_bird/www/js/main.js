@@ -11,6 +11,16 @@ function FlappyBird(){
 	var pipe_down = document.getElementsByClassName('pipe_down');
 	var pipe_up_body = document.getElementsByClassName('pipe_up_body');
 	var pipe_down_body = document.getElementsByClassName('pipe_down_body');
+	var score_num = document.getElementById('score_num');
+	var score_num1 = document.getElementById('score_num1');
+	var score_num2 = document.getElementById('score_num2');game_over
+	var game_over = document.getElementById('game_over');
+	var c_ones = document.getElementById('c_ones');
+	var c_decade = document.getElementById('c_decade');
+	var b_ones = document.getElementById('b_ones');
+	var b_decade = document.getElementById('b_decade');
+	var medal = document.getElementById('medal');
+	var restart = document.getElementById('restart');
 	var self = this;
 
 	this.logo_bird = logo_bird;
@@ -21,11 +31,27 @@ function FlappyBird(){
 	this.pipe_down_body = pipe_down_body;
 	this.bird = bird;
 	this.land = land;
+	this.score_num = score_num;
+	this.score_num1 = score_num1;
+	this.score_num2 = score_num2;
+	this.game_over = game_over;
+	this.c_ones = c_ones;
+	this.c_decade = c_decade;
+	this.b_ones = b_ones;
+	this.b_decade = b_decade;
+	this.medal = medal;
 	this.started = true;
+	this.score_ones = 0;
+	this.score_decade = 0;
+	this.current_score = 0;
 
 	land.className = 'landanim';
+	if(this.getCookie('best_score') == '') {
+		alert('no cookie');
+		this.setCookie('best_score',0,365);
+	}
 
-	EventUtil.addHandler(wrap,'click',function(e){
+	EventUtil.addHandler(document,'click',function(e){
 		var e = e || window.event;
 		var target = e.target || e.srcElement;
 		switch(target.id){
@@ -35,40 +61,49 @@ function FlappyBird(){
 				btn.style.display = 'none';
 				get_ready_view.style.display = 'block';
 				bird.style.display = 'block';
-				self.bird_flying(bird);
-				EventUtil.addHandler(wrap,'click',function(){
+				score_num.style.display = 'block';
+				bird_flying_timer = setInterval(function(){
+					self.bird_flying(bird);
+				},80);
+				EventUtil.addHandler(wrap,'click',function updown(){
 					get_ready_view.style.display = 'none';
-					clearTimeout(bird.timer);
-					clearInterval(bird.down_timer);
+					clearInterval(bird_flying_timer);
+					clearInterval(bird.timer);
 					bird.className = 'bird_up';
-					bird.style.left = 150+'px';
-					effect.animate(bird,{'top':bird.offsetTop - 30},{'tween_type':'Quad','ease_type':'easeOut','duration':10},function(){
+					effect.animate(bird,{'top':bird.offsetTop - 40},{'tween_type':'Quad','ease_type':'easeOut','duration':10},function(){
 						bird.className = 'bird_down';
-						bird.down_timer = setInterval(function(){
-							var landed = self.interact(bird,land);
-							if(landed) {
-								clearInterval(bird.down_timer);
-								clearTimeout(bird.timer);
-								clearInterval(self.changeLeft.timer);
-								land.className = '';
-								bird.className = '';
-							}
-							bird.style.top = bird.offsetTop + 4 + 'px';
-						},30);
+						effect.animate(bird,{'top':495},{'tween_type':'Quad','ease_type':'easeIn','duration':80},function(){
+							bird.className = '';
+						});
 					});
 					if(self.started) {
 						self.changeHeight();
 						self.changeLeft.timer = setInterval(function(){
-							self.changeLeft();
-						},30);
+							self.changeLeft(updown);
+						},10);
 						self.started = false;
 					}
 				});
 				break;
+			case 'restart':
+				game_over.style.display = 'none';
+				self.started = true;
+				bird.style.top = 267 + 'px';
+				bird.style.left = 108 + 'px';
+				self.changeHeight();
+				score_num1.style.background = 'url(../img/0.png) no-repeat';
+				score_num2.style.background = '';
+				self.current_score = 0;
+				self.score_ones = 0;
+				self.score_decade = 0;
+				start.click();
+				break;
 		}
 	});
 
-	this.bird_flying(logo_bird);
+	logo_bird.timer = setInterval(function(){
+		self.bird_flying(logo_bird);
+	},80)
 	this.bounce_logo();
 }
 
@@ -83,8 +118,6 @@ FlappyBird.prototype = {
 				obj.style.backgroundImage = 'url(../img/bird1.png)';
 				obj.src = 1;
 			}
-
-			obj.timer = setTimeout(arguments.callee,80,obj);
 	},
 	bounce_logo: function(){
 		var start_logo = this.start_logo;
@@ -124,10 +157,10 @@ FlappyBird.prototype = {
 			pipe_down[i].style.left = left + 'px';
 			pipe_up[i].className = 'pipe_up display';
 			pipe_down[i].className = 'pipe_down display';
-			left +=150;
+			left +=170;
 		}
 	},
-	changeLeft:function(){
+	changeLeft:function(handler){
 		var pipe_down = this.pipe_down;
 		var pipe_up = this.pipe_up;
 		var pipe_up_body = this.pipe_up_body;
@@ -136,28 +169,69 @@ FlappyBird.prototype = {
 		var land = this.land;
 		var self = this;
 		for(var i=0; i<pipe_down.length; i++) {
-			var left = pipe_down[i].offsetLeft - 3;
+			var left = pipe_down[i].offsetLeft - 1;
 			if(pipe_down[i].offsetLeft <= -60) {
 				var pipe_up_height = this.randomHeight(50,150);
 				var pipe_down_height = 300 - pipe_up_height;
 				pipe_up_body[i].style.height = pipe_up_height + 'px';
 				pipe_down_body[i].style.height = pipe_down_height + 'px';
-				left = 550
+				left = 550;
 			}
 			pipe_down[i].style.left = left + 'px';
 			pipe_up[i].style.left = left + 'px';
 			if(this.interact(bird,pipe_up[i]) || this.interact(bird,pipe_down[i]) || this.interact(bird,land)){
-				clearTimeout(bird.timer);
+				clearTimeout(this.bird_flying.timer);
 				clearInterval(this.changeLeft.timer);
 				land.className = '';
-				bird.className = '';
-				bird.down_timer = setInterval(function(){
-					var landed = self.interact(bird,land);
-					bird.style.top = bird.offsetTop + 5 + 'px';
-					if(landed) {
-						clearInterval(bird.down_timer);
+				EventUtil.removeHandler(wrap,'click',handler);
+				this.score_num.style.display = 'none';
+				this.game_over.style.display = 'block';
+				this.c_ones.src = 'img/'+this.score_ones+'.png';
+				this.c_decade.src = 'img/'+this.score_decade+'.png';
+				var best_score = parseInt(this.getCookie('best_score'));
+				if(best_score < this.current_score) {
+					this.setCookie('best_score',this.current_score,356);
+					this.b_ones.src = 'img/'+this.score_ones+'.png';
+					this.b_decade.src = 'img/'+this.score_decade+'.png';
+				} else {
+					var score = this.getCookie('best_score');
+					var ones = score.substring(0,1);
+					if(score.length > 1) {
+						var decade = score.substring(1,2);
+						this.b_ones.src = 'img/'+ones+'.png';
+						this.b_decade.src = 'img/'+decade+'.png';
+					} else {
+						this.b_ones.src = 'img/'+ones+'.png';
+						this.b_decade.src = 'img/'+this.score_decade+'.png';
 					}
-				},30);
+				}
+
+				if(this.current_score > 2) {
+					this.medal.src = 'img/medals_0.png';
+				} else if (this.current_score > 5) {
+					this.medal.src = 'img/medals_3.png';
+				} else if (this.current_score > 8) {
+					this.medal.src = 'img/medals_2.png';
+				} else if (this.current_score > 11) {
+					this.medal.src = 'img/medals_1.png';
+				}
+				break;
+			}
+			if(bird,pipe_up[i].offsetLeft == 108){
+				this.current_score += 1;
+				if(this.score_ones < 9) {
+					this.score_num1.style.background = 'url(../img/'+(this.score_ones+1)+'.png) no-repeat';
+					this.score_ones += 1;
+				} else {
+					if(this.score_ones % 9 == 0) {
+						this.score_ones = 0;
+						this.score_decade += 1;
+						alert('eq 9');
+					}
+					this.score_num1.style.background = 'url(../img/'+this.score_decade+'.png) no-repeat';
+					this.score_num2.style.background = 'url(../img/'+this.score_ones+'.png) no-repeat';
+					this.score_ones += 1;
+				}
 			}
 		}
 	},
@@ -166,6 +240,26 @@ FlappyBird.prototype = {
 		// [0,1) * (n-m) + m
 		// [0,n-m) + m
 		// [m,n)
+	},
+	setCookie:function(c_name,value,expiredays){
+		var exdate=new Date()
+		exdate.setDate(exdate.getDate()+expiredays)
+		document.cookie=c_name+ "=" +escape(value)+
+		((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+	},
+	getCookie:function(c_name){
+		if (document.cookie.length>0)
+		  {
+		  c_start=document.cookie.indexOf(c_name + "=")
+		  if (c_start!=-1)
+		    { 
+		    c_start=c_start + c_name.length+1 
+		    c_end=document.cookie.indexOf(";",c_start)
+		    if (c_end==-1) c_end=document.cookie.length
+		    return unescape(document.cookie.substring(c_start,c_end))
+		    } 
+		  }
+		return ""
 	}
 }
 

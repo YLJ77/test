@@ -78,7 +78,7 @@
 
 .landanim {
   -webkit-animation-name: landanim;
-  -webkit-animation-duration: 2s;
+  -webkit-animation-duration: 4s;
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite; }
 
@@ -92,10 +92,26 @@
   display: none; }
 
 #score_num {
-  display: block;
-  margin: 100px auto 0; }
+  width: 56px;
+  height: 44px;
+  margin: 100px auto 0;
+  position: relative;
+  z-index: 111;
+  display: none; }
 
-.get_ready, .tip {
+#score_num div {
+  float: left;
+  width: 24px;
+  height: 48px; }
+
+#score_num1 {
+  background: url(../img/0.png) no-repeat; }
+
+.get_ready {
+  display: block;
+  margin: 30px auto 0; }
+
+.tip {
   display: block;
   margin: 30px auto 0; }
 
@@ -103,10 +119,10 @@
   width: 40px;
   height: 26px;
   position: absolute;
-  left: 20px;
-  top: 300px;
+  left: 108px;
+  top: 267px;
   display: none;
-  z-index: 999;
+  z-index: 888;
   background: url(../img/bird0.png);
   -webkit-animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
@@ -162,3 +178,50 @@
 
 .display {
   display: block; }
+
+#game_over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 600px;
+  display: none;
+  z-index: 999; }
+
+#game_over .text {
+  width: 204px;
+  height: 54px;
+  margin: 100px auto 0px; }
+
+#game_over .panel {
+  width: 238px;
+  height: 126px;
+  margin: 20px auto 0; }
+
+#game_over .button {
+  width: 116px;
+  height: 70px;
+  margin: 50px auto 0; }
+
+.current_score, .best_score, #medal {
+  position: absolute; }
+
+.current_score, .best_score {
+  width: 52px;
+  height: 44px; }
+
+.current_score img, .best_score img {
+  width: 12px;
+  height: 22px; }
+
+.current_score {
+  left: 263px;
+  top: 207px; }
+
+.best_score {
+  left: 263px;
+  top: 248px; }
+
+#medal {
+  left: 112px;
+  top: 220px; }

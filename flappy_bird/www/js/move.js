@@ -182,7 +182,12 @@ var effect = {
 		for(attr in json){
 			var beginning_value = parseInt(parseFloat(attribute.get(obj,attr)));
 			var change_in_value = json[attr] - beginning_value;
-			var value = Tween[type['tween_type']][type['ease_type']](obj.current_time,beginning_value,change_in_value,type['duration']);
+            if(type['ease_type']){
+                var value = Tween[type['tween_type']][type['ease_type']](obj.current_time,beginning_value,change_in_value,type['duration']);
+            } else {
+                var value = Tween[type['tween_type']](obj.current_time,beginning_value,change_in_value,type['duration']);
+            }
+			
             value = value > 0 ? Math.ceil(value) : Math.floor(value);
 			attribute.set(obj,attr,value);
 			if(json[attr] == value){
