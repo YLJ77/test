@@ -88,8 +88,7 @@ function FlappyBird(){
 					bird.className = 'bird_up';
 					effect.animate(bird,{'top':bird.offsetTop - 40},{'tween_type':'Quad','ease_type':'easeOut','duration':10},function(){
 						bird.className = 'bird_down';
-						effect.animate(bird,{'top':495},{'tween_type':'Quad','ease_type':'easeIn','duration':80},function(){
-							Die.play();
+						effect.animate(bird,{'top':495},{'tween_type':'Quad','ease_type':'easeIn','duration':110},function(){
 							bird.className = '';
 						});
 					});
@@ -166,11 +165,20 @@ FlappyBird.prototype = {
 		var pipe_up_body = this.pipe_up_body;
 		var pipe_down_body = this.pipe_down_body;
 		var land = this.land;
+		var wrap = this.wrap;
+		//上下两条柱的间隙高度
+		var gap = 100;
+		//水管头部固定的高度
+		var pipe_head = 60;
+		//页面剩余高度
+		var leftHeight = wrap.offsetHeight-land.offsetHeight-pipe_head*2-gap;
+		//每条水管可生成的最大高度
+		var single_pipe_body_height = leftHeight/2;
 		for(var i=0; i<pipe_up_body.length; i++) {
-			var pipe_up_height = this.randomHeight(0,150);
-			var pipe_down_height = 300 - pipe_up_height;
-			pipe_up_body[i].style.height = pipe_up_height + 'px';
-			pipe_down_body[i].style.height = pipe_down_height + 'px';
+			var pipe_up_body_height = this.randomHeight(0,single_pipe_body_height);
+			var pipe_down_body_height = leftHeight - pipe_up_body_height;
+			pipe_up_body[i].style.height = pipe_up_body_height + 'px';
+			pipe_down_body[i].style.height = pipe_down_body_height + 'px';
 			pipe_up[i].style.left = left + 'px';
 			pipe_down[i].style.left = left + 'px';
 			pipe_up[i].className = 'pipe_up display';
@@ -207,6 +215,7 @@ FlappyBird.prototype = {
 
 			if(this.interact(bird,pipe_up[i]) || this.interact(bird,pipe_down[i]) || this.interact(bird,land)){
 				Hit.play();
+				Die.play();
 				clearTimeout(this.bird_flying.timer);
 				clearInterval(this.changeLeft.timer);
 				land.className = '';
@@ -252,13 +261,18 @@ FlappyBird.prototype = {
 			if(bird,pipe_up[i].offsetLeft == 108){
 				Point.play();
 				this.current_score += 1;
-				if(this.score_ones < 9) {
-					this.score_num1.style.background = 'url(../img/'+(this.score_ones+1)+'.png) no-repeat';
-					this.score_ones += 1;
-				} else if(this.score_ones % 9 == 0) {
+				this.score_ones += 1;
+				if(this.current_score < 10) {
+					this.score_num1.style.background = 'url(../img/'+(this.score_ones)+'.png) no-repeat';
+				} else {
+					if(this.current_score % 10 == 0) {
 						this.score_ones = 0;
 						this.score_decade += 1;
+						console.log('==10 '+ 'current_score: '+ this.current_score);
 					}
+					this.score_num1.style.background = 'url(../img/'+(this.score_decade)+'.png) no-repeat';
+					this.score_num2.style.background = 'url(../img/'+(this.score_ones)+'.png) no-repeat';
+				}
 			}
 		}
 	},

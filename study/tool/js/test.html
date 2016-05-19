@@ -1,15 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<script type="text/javascript" src="jquery-1.11.2.js"></script>
-	<script type="text/javascript">
-		var str = 'hello';
-		alert(str.substring(1,2));
-	</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+
 </head>
+ 
 <body>
+<div id="div1" style="width:100px; height:100px; position:absolute;top:0; left:300px; background:red;"></div>
+
+<script type="text/javascript">
+function freefall(obj,height,aspeed){
+	if(obj.acceleration==undefined){//把速度定义当前运动的这个DIV的一个属性
+		obj.acceleration=0;	//初始的速度是0
+	}
+	console.log(obj.acceleration);
+	obj.acceleration+=aspeed;  //加速度
+	obj.acceleration*=0.97;  //摩擦系数
+	if(obj.offsetTop+obj.acceleration>=height-obj.offsetHeight){//判断是否到底边
+		clearTimeout(obj.freefall)
+		}else{
+		
+		obj.style.top=obj.offsetTop+obj.acceleration+'px';//正常的运动
+	}
 	
+}
+
+	var box = document.getElementById('div1');
+	
+	box.freefall = setInterval(function(){
+		freefall(box,300,1);
+	},30);
+</script>
 </body>
 </html>
