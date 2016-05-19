@@ -1,7 +1,6 @@
 function FlappyBird(){
 	var logo_bird = document.getElementById('logo_bird');
 	var start_logo = document.getElementById('start_logo');
-	var btn = document.getElementById('btn');
 	var start = document.getElementById('start');
 	var get_ready_view = document.getElementById('get_ready_view');
 	var bird = document.getElementById('bird');
@@ -21,7 +20,18 @@ function FlappyBird(){
 	var b_decade = document.getElementById('b_decade');
 	var medal = document.getElementById('medal');
 	var restart = document.getElementById('restart');
+
+	//media
+	var Die = document.getElementById('Die');
+	var Hit = document.getElementById('Hit');
+	var Point = document.getElementById('Point');
+	var Swooshing = document.getElementById('Swooshing');
+	var Wing = document.getElementById('Wing');
+
 	var self = this;
+
+	bird.finish = true;
+	start_logo.finish = true;
 
 	this.logo_bird = logo_bird;
 	this.start_logo = start_logo;
@@ -40,6 +50,7 @@ function FlappyBird(){
 	this.b_ones = b_ones;
 	this.b_decade = b_decade;
 	this.medal = medal;
+	this.wrap = wrap;
 	this.started = true;
 	this.score_ones = 0;
 	this.score_decade = 0;
@@ -56,27 +67,34 @@ function FlappyBird(){
 		var target = e.target || e.srcElement;
 		switch(target.id){
 			case 'start':
+				Swooshing.play();
 				start_logo.style.display = 'none';
-				clearInterval(self.bounce_logo.timer);
-				btn.style.display = 'none';
+				clearInterval(start_logo.clock);
+				clearInterval(logo_bird.timer);
+				start.style.display = 'none';
 				get_ready_view.style.display = 'block';
 				bird.style.display = 'block';
 				score_num.style.display = 'block';
+				self.bounce_logo(bird,287,267);
 				bird_flying_timer = setInterval(function(){
 					self.bird_flying(bird);
 				},80);
 				EventUtil.addHandler(wrap,'click',function updown(){
+					Wing.play();
 					get_ready_view.style.display = 'none';
 					clearInterval(bird_flying_timer);
 					clearInterval(bird.timer);
+					clearInterval(bird.clock);
 					bird.className = 'bird_up';
 					effect.animate(bird,{'top':bird.offsetTop - 40},{'tween_type':'Quad','ease_type':'easeOut','duration':10},function(){
 						bird.className = 'bird_down';
 						effect.animate(bird,{'top':495},{'tween_type':'Quad','ease_type':'easeIn','duration':80},function(){
+							Die.play();
 							bird.className = '';
 						});
 					});
 					if(self.started) {
+						land.className = '';
 						self.changeHeight();
 						self.changeLeft.timer = setInterval(function(){
 							self.changeLeft(updown);
@@ -96,6 +114,8 @@ function FlappyBird(){
 				self.current_score = 0;
 				self.score_ones = 0;
 				self.score_decade = 0;
+				bird.finish = true;
+				land.className = 'landanim';
 				start.click();
 				break;
 		}
@@ -104,12 +124,11 @@ function FlappyBird(){
 	logo_bird.timer = setInterval(function(){
 		self.bird_flying(logo_bird);
 	},80)
-	this.bounce_logo();
+	this.bounce_logo(start_logo,70,50);
 }
 
 FlappyBird.prototype = {
-	bounce_logo_finish:true,
-	bird_flying: function(obj){
+	bird_flying: function(obj,top_go,top_back){
 		var logo_bird_src = this.logo_bird_src;
 			if(obj.src == 1){
 				obj.style.backgroundImage = 'url(../img/bird0.png)';
@@ -119,37 +138,36 @@ FlappyBird.prototype = {
 				obj.src = 1;
 			}
 	},
-	bounce_logo: function(){
-		var start_logo = this.start_logo;
-		var self = this;
+	bounce_logo: function(obj,top_go,top_back){
 		function move(){
-			if(self.bounce_logo_finish){
-				effect.animate(start_logo,{'top':70},{'tween_type':'Circ','ease_type':'easeIn','duration':20},function(){
-					self.bounce_logo_finish = false;
-					effect.animate(start_logo,{'top':50},{'tween_type':'Circ','ease_type':'easeIn','duration':20},function(){
-						self.bounce_logo_finish = true;
+			if(obj.finish){
+				effect.animate(obj,{'top':top_go},{'tween_type':'Circ','ease_type':'easeIn','duration':20},function(){
+					obj.finish = false;
+					effect.animate(obj,{'top':top_back},{'tween_type':'Circ','ease_type':'easeIn','duration':20},function(){
+						obj.finish = true;
 					});
 				});
 			}
 		}
-		this.bounce_logo.timer = setInterval(move,300);
+		obj.clock = setInterval(move,300);
 	},
 	interact:function(obj_1,obj_2){
-		var a_x_w = Math.abs((obj_1.offsetLeft+obj_1.offsetWidth/2) - (obj_2.offsetLeft+obj_2.offsetWidth/2));
-	    var b_w_w = Math.abs((obj_1.offsetWidth+obj_2.offsetWidth)/2);
-	    var a_y_h = Math.abs((obj_1.offsetTop+obj_1.offsetHeight/2) - (obj_2.offsetTop+obj_2.offsetHeight/2)); 
-	    var b_h_h = Math.abs((obj_1.offsetHeight+obj_2.offsetHeight)/2);
-	    if( a_x_w < b_w_w && a_y_h < b_h_h ) return true;
+		var between_width = Math.abs((obj_1.offsetLeft+obj_1.offsetWidth/2) - (obj_2.offsetLeft+obj_2.offsetWidth/2));
+	    var both_half_width = Math.abs((obj_1.offsetWidth+obj_2.offsetWidth)/2);
+	    var between_height = Math.abs((obj_1.offsetTop+obj_1.offsetHeight/2) - (obj_2.offsetTop+obj_2.offsetHeight/2)); 
+	    var both_half_height = Math.abs((obj_1.offsetHeight+obj_2.offsetHeight)/2);
+	    if( between_width < both_half_width && between_height < both_half_height ) return true;
 	    else return false;
 	},
 	changeHeight:function(){
-		var left = 500;
+		var left = 570;
 		var pipe_down = this.pipe_down;
 		var pipe_up = this.pipe_up;
 		var pipe_up_body = this.pipe_up_body;
 		var pipe_down_body = this.pipe_down_body;
+		var land = this.land;
 		for(var i=0; i<pipe_up_body.length; i++) {
-			var pipe_up_height = this.randomHeight(50,150);
+			var pipe_up_height = this.randomHeight(0,150);
 			var pipe_down_height = 300 - pipe_up_height;
 			pipe_up_body[i].style.height = pipe_up_height + 'px';
 			pipe_down_body[i].style.height = pipe_down_height + 'px';
@@ -167,7 +185,14 @@ FlappyBird.prototype = {
 		var pipe_down_body = this.pipe_down_body;
 		var bird = this.bird;
 		var land = this.land;
+		var wrap = this.wrap;
 		var self = this;
+
+		land.style.left = land.offsetLeft - 1 + 'px';
+		if(land.offsetLeft == -(land.offsetWidth/2)){
+			land.style.left = 0 + 'px';
+		}
+
 		for(var i=0; i<pipe_down.length; i++) {
 			var left = pipe_down[i].offsetLeft - 1;
 			if(pipe_down[i].offsetLeft <= -60) {
@@ -175,11 +200,13 @@ FlappyBird.prototype = {
 				var pipe_down_height = 300 - pipe_up_height;
 				pipe_up_body[i].style.height = pipe_up_height + 'px';
 				pipe_down_body[i].style.height = pipe_down_height + 'px';
-				left = 550;
+				left = wrap.offsetWidth + pipe_down[i].offsetWidth + 170;
 			}
 			pipe_down[i].style.left = left + 'px';
 			pipe_up[i].style.left = left + 'px';
+
 			if(this.interact(bird,pipe_up[i]) || this.interact(bird,pipe_down[i]) || this.interact(bird,land)){
+				Hit.play();
 				clearTimeout(this.bird_flying.timer);
 				clearInterval(this.changeLeft.timer);
 				land.className = '';
@@ -188,6 +215,8 @@ FlappyBird.prototype = {
 				this.game_over.style.display = 'block';
 				this.c_ones.src = 'img/'+this.score_ones+'.png';
 				this.c_decade.src = 'img/'+this.score_decade+'.png';
+				this.score_num1.style.background = 'url(../img/'+this.score_decade+'.png) no-repeat';
+				this.score_num2.style.background = 'url(../img/'+this.score_ones+'.png) no-repeat';
 				var best_score = parseInt(this.getCookie('best_score'));
 				if(best_score < this.current_score) {
 					this.setCookie('best_score',this.current_score,356);
@@ -195,9 +224,9 @@ FlappyBird.prototype = {
 					this.b_decade.src = 'img/'+this.score_decade+'.png';
 				} else {
 					var score = this.getCookie('best_score');
-					var ones = score.substring(0,1);
+					var ones = score.substring(1,2);
 					if(score.length > 1) {
-						var decade = score.substring(1,2);
+						var decade = score.substring(0,1);
 						this.b_ones.src = 'img/'+ones+'.png';
 						this.b_decade.src = 'img/'+decade+'.png';
 					} else {
@@ -206,32 +235,30 @@ FlappyBird.prototype = {
 					}
 				}
 
-				if(this.current_score > 2) {
+				if(this.current_score > 2 && this.current_score <= 5) {
 					this.medal.src = 'img/medals_0.png';
-				} else if (this.current_score > 5) {
+				} else if (this.current_score > 5 && this.current_score <= 8) {
 					this.medal.src = 'img/medals_3.png';
-				} else if (this.current_score > 8) {
+				} else if (this.current_score > 8  && this.current_score <= 11) {
 					this.medal.src = 'img/medals_2.png';
 				} else if (this.current_score > 11) {
 					this.medal.src = 'img/medals_1.png';
+				} else {
+					this.medal.src = '';
 				}
 				break;
 			}
+			//得分
 			if(bird,pipe_up[i].offsetLeft == 108){
+				Point.play();
 				this.current_score += 1;
 				if(this.score_ones < 9) {
 					this.score_num1.style.background = 'url(../img/'+(this.score_ones+1)+'.png) no-repeat';
 					this.score_ones += 1;
-				} else {
-					if(this.score_ones % 9 == 0) {
+				} else if(this.score_ones % 9 == 0) {
 						this.score_ones = 0;
 						this.score_decade += 1;
-						alert('eq 9');
 					}
-					this.score_num1.style.background = 'url(../img/'+this.score_decade+'.png) no-repeat';
-					this.score_num2.style.background = 'url(../img/'+this.score_ones+'.png) no-repeat';
-					this.score_ones += 1;
-				}
 			}
 		}
 	},

@@ -36,29 +36,16 @@
 .btn{
 	position: absolute;
 	bottom:110px;
-	width: 210px;
-	height:29px;
+	width: 116px;
+	height:70px;
 	left:0;
 	right:0;
 	margin:auto;
-	div{
-		float:left;
-	}
-	#start{
-		width: 85px;
-		height: 29px;
-		background:url(../img/start.jpg);
-		margin-right: 40px;
-	}
-	#score{
-		width: 85px;
-		height: 29px;
-		background:url(../img/score.jpg);
-	}
+	background:url(../img/button_play.png);
 }
 #land{
-	width: 800px;
 	position: absolute;
+	width:800px;
 	bottom:0px;
 	height:80px;
 	background:url(../img/land.png);
@@ -152,12 +139,10 @@
 
 .pipe_up{
 	position:absolute;
-	//left:300px;
 	top:0;
 	display:none;
 	.pipe_up_body{
 		width: 62px;
-		//height: 120px;
 		background:url(../img/up_mod.png);
 	}
 	.pipe_head{
@@ -169,12 +154,10 @@
 
 .pipe_down{
 	position:absolute;
-	//left:300px;
 	bottom:80px;
 	display:none;
 	.pipe_down_body{
 		width: 62px;
-		//height: 180px;
 		background:url(../img/down_mod.png);
 	}
 	.pipe_head{
@@ -210,6 +193,7 @@
 		width: 116px;
 		height: 70px;
 		margin:50px auto 0;
+		background: url(../img/button_play.png);
 	}
 }
 

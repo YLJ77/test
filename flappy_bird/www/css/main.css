@@ -49,29 +49,16 @@
 .btn {
   position: absolute;
   bottom: 110px;
-  width: 210px;
-  height: 29px;
+  width: 116px;
+  height: 70px;
   left: 0;
   right: 0;
-  margin: auto; }
-
-.btn div {
-  float: left; }
-
-.btn #start {
-  width: 85px;
-  height: 29px;
-  background: url(../img/start.jpg);
-  margin-right: 40px; }
-
-.btn #score {
-  width: 85px;
-  height: 29px;
-  background: url(../img/score.jpg); }
+  margin: auto;
+  background: url(../img/button_play.png); }
 
 #land {
-  width: 800px;
   position: absolute;
+  width: 800px;
   bottom: 0px;
   height: 80px;
   background: url(../img/land.png); }
@@ -201,7 +188,8 @@
 #game_over .button {
   width: 116px;
   height: 70px;
-  margin: 50px auto 0; }
+  margin: 50px auto 0;
+  background: url(../img/button_play.png); }
 
 .current_score, .best_score, #medal {
   position: absolute; }
