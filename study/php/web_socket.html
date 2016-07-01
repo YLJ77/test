@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<button id="send">send</button>
+	<script>
+	var ws = new WebSocket('ws://localhost:1935');
+	ws.onopen = function() {
+		console.log('success');
+	}
+	ws.onmessage = function(e){
+		console.log(e.data);
+	}
+
+	send.onclick=function(){
+		ws.send('amazimg');
+	}
+	</script>
+</body>
+</html>

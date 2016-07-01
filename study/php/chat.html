@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		#wrap{
+			margin:10px;
+			position: relative;
+			width: 400px;
+			height: 500px;
+			border:1px solid #ccc;
+		}
+		#wrap input{
+			margin: 5px;
+			height: 30px;
+		}
+		#wrap input:first-child{
+			width: 300px;
+		}
+		#wrap input:last-child{
+			width: 50px;
+		}
+		#io{
+			position: absolute;
+			bottom:0;
+		}
+		.content{
+			position: relative;
+			height: 440px;
+			overflow:hidden;
+		}
+		.content div{
+			position: absolute;
+			border-radius:8px;
+			background-color: #CCFFFF;
+			padding:8px;
+		}
+	</style>
+	<script src="jquery-1.11.2.js"></script>
+</head>
+<body>
+	<div id="wrap">
+		<div class="content" id="content">
+		</div>
+		<div id="io">
+			<input id="input" type="text">
+			<input id="send" type="button" value="发送">
+		</div>
+	</div>
+
+	<script>
+	function Chat(){
+		var con = document.getElementById('content'),
+			send = document.getElementById('send'),
+			input = document.getElementById('input'),
+			self = this;
+
+		this.con = con;
+		this.time = Date.parse(new Date());
+
+		document.addEventListener('click', function(e){
+			var e = e || window.event,
+				target = e.target || e.srcElement;
+
+			switch(target.id) {
+				case 'send':
+					if(input.value == '') return;
+					clearInterval(self.clock.timer);
+					/*self.ajax({
+						type:'get',
+						url:'chat_insert.php',
+						data:{
+							msg:input.value,
+							time:self.time
+						},
+						success:function(text){
+							self.clock();
+						},
+						asyn:true
+					});*/
+					$.ajax({
+						type:'get',
+						url:'chat_insert.php',
+						data:{
+							msg:input.value,
+							time:self.time
+						},
+						success:function(response,status,xhr){
+							self.clock();
+						},
+						asyn:true
+					});
+					break;
+			}
+		}, false);
+		this.clock();
+	}
+
+
+	Chat.prototype = {
+		displayMsg:function(){
+			var con = this.con,
+				child = con.children,
+				len = child.length,
+				childBottom = 0;
+			if(len < 1) return;
+			var height = child[0].offsetHeight + 10;
+			for(var i=0; i < len; i++) {
+				childBottom = height * (len - i);
+				child[i].style.bottom = childBottom + 'px';
+			}
+		},
+		ajax:function(obj){
+			var xhr = false;  
+	           try {  
+	               xhr = new ActiveXObject("Msxml2.XMLHTTP"); // ie msxml3.0+（IE7.0及以上）  
+	           } catch (e) {  
+	               try {  
+	                   xhr = new ActiveXObject("Microsoft.XMLHTTP"); //ie msxml2.6（IE5/6）  
+	               } catch (e2) {  
+	                   xhr = false;  
+	               }  
+	           }  
+	           if (!xhr && typeof XMLHttpRequest != 'undefined') {// Firefox, Opera 8.0+, Safari  
+	               xhr = new XMLHttpRequest();  
+	           }  
+			obj.data = this.formatData(obj.data);
+			if(obj.type == 'get') obj.url = obj.url + '?' + obj.data;
+			xhr.open(obj.type, obj.url, obj.asyn);
+			// console.log(xhr);
+			xhr.onreadystatechange = function(){
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					obj.success(xhr.responseText);
+				}
+			}
+			if(obj.type == 'post') {
+				xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded;');
+				xhr.send(obj.data);
+			} else {
+				xhr.send(null);
+			}
+		},
+		formatData:function(data){
+			var tmp = [];
+			for(var key in data) tmp.push(key + '=' + data[key]);
+			return tmp.join('&');
+		},
+		clock:function(){
+			var self = this,
+				con = this.con;
+				
+			this.clock.timer = setInterval(function(){
+				$.ajax({
+					type:'get',
+					url:'chat_select.php',
+					data:{
+						time:self.time
+					},
+					success:function(response,status,xhr){
+						console.log('time: ' + self.time + ' text: ' + response);
+						// var msg = JSON.parse(response);
+						var msg = eval('('+response+')');
+						if(msg.length == 0) return;
+						self.time = Date.parse(new Date());
+						
+						for(var i=0,len = msg.length; i < len; i++) {
+							var div = document.createElement('div'),
+								txt = document.createTextNode(msg[i]);
+
+							div.appendChild(txt);
+							con.appendChild(div);
+							self.displayMsg();
+						}
+					},
+					asyn:true
+				});
+			}, 100);
+		}
+	}
+
+	new Chat();
+	</script>
+</body>
+</html>

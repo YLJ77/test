@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-1.11.2.js"></script>
+	<style>
+		.loading{
+			display:none;
+			color:red;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		用户名：<input type="text" name="user">
+		邮件：<input type="text" name="email">
+		男：<input type="radio" name="sex" value="male">
+		女<input type="radio" name="sex" value="female">
+		<input type="button" value="提交">
+	</form>
+	<span class="loading">正在加载中..</span>
+	<div id="box"></div>
+
+	<script>
+	/*$.ajaxSetup({
+		type:'POST',
+		url:'ajax.php',
+		data:$('form').serialize()
+	});*/
+
+	/*$('#box').load('ajax.php',{
+			who:'me'
+		},function(response,stutas,xhr){
+			alert(stutas);
+		});*/
+
+		/*$.post('ajax.php',{
+			who:'me'
+		},function(responseText,status,xhr){
+			$('#box').html(responseText);
+		});*/
+
+		/*$.ajax({
+			type:'post',
+			url:'ajax.php',
+			data:$('form').serialize(),
+			success:function(response,status,xhr){
+				$('#box').html(response);
+			}
+		});*/
+
+		//$('#box').html(decodeURIComponent($(this).serialize()));
+		/*var json = $(this).serializeArray();
+		console.log(json[0].name+'--'+json[0].value);*/
+
+
+		/*$('form input[type=button]').on('click',function(){
+			$.ajax({
+				type:'POST',
+				url:'http://www.abcd.com/ajax.php',
+				data:$('form').serialize(),
+				success:function(response,status,xhr){
+					$('#box').html(response);
+				},
+				// global:false
+				error:function(xhr,errorText,errorType){
+					alert(xhr.status+':'+xhr.statusText);
+				},
+				complete:function(){
+					alert('done');
+				}
+			});
+		})
+
+		$(document).ajaxStart(function(){
+			$('.loading').show();
+		}).ajaxStop(function(){
+			$('.loading').hide();
+		});*/
+
+		$('form input[type=button]').on('click',function(){
+			// $.ajax({
+			// 	type:'POST',
+			// 	/*url:'jsonp.php?callback=?',
+			// 	dataType:'json',*/
+			// 	url:'jsonp.php',
+			// 	dataType:'jsonp',
+			// 	success:function(response,status,xhr){
+			// 		$('#box').html(response);
+			// 		alert(response.a);
+			// 	}
+			// });
+
+
+			/*$.getJSON('jsonp.php?callback=?',function(response){
+				alert(response.a);
+				console.log(response);
+			})*/
+
+			var jqXHR = $.ajax({
+				type:'POST',
+				url:'ajax.php',
+				data:$('form').serialize()
+			});
+
+			jaXHR.done(function(response){
+				alert('response');
+			});
+		})
+
+	</script>
+</body>
+</html>
+

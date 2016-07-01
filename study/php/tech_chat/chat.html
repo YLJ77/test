@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title> AJAX简易聊天室 </title>
+	
+	<link rel="stylesheet" type="text/css" href="buttons/buttons.css" />
+	<style type="text/css">
+		#msglist{
+			width:500px;
+			height:500px;
+			border:1px solid gray;
+			margin-bottom:15px;
+			overflow:scroll;
+		}
+		#msglist li span{
+			margin-left:30px;
+		}
+		ul{
+			list-style: none; /* 清除列表默认的编码*/
+			font: 15px 'trebuchet MS', 'lucida sans';
+			padding: 0;
+			margin-bottom: 4em;
+			text-shadow: 0 1px 0 rgba(255,255,255,.5);
+		}
+		ul li{
+			position:relative;
+			margin-left:1em;
+			margin-right:1em;
+			padding:0 1em;
+			min-height:2em;
+			line-height:2em;
+		}
+		
+		ul li:nth-child(2n){
+			background:#f0f8fa;
+		}
+
+		.text{
+			width:300px;
+			height:24px;
+			margin:0 15px;
+			padding: 5px;
+			font-size: 15px;
+			outline: none;
+			text-shadow: 0px 1px 0px #fff;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			border-radius: 3px;
+			border: 1px solid #ccc;
+			-webkit-transition: .3s ease-in-out;
+			-moz-transition: .3s ease-in-out;
+			-o-transition: .3s ease-in-out;
+		}
+		.text:focus{
+			 border: 1px solid #fafafa;
+			 -webkit-box-shadow: 0px 0px 6px #007eff;
+			 -moz-box-shadow: 0px 0px 5px #007eff;
+			 box-shadow: 0px 0px 5px #007eff;
+		}
+	</style>
+</head>
+<body>
+	<div id="msglist">
+		<ul>
+		</ul>
+	</div>
+	<input type='text' class="text" id='text' value=""/>
+	<input type='button' class="button small orange" id='btn' value="发送"/>
+</body>
+<script type="text/javascript">
+<!--
+	var text = document.getElementById('text');
+	var btn = document.getElementById('btn');
+	var con = document.querySelector('#msglist > ul');
+	//发送消息
+	btn.onclick = function(){
+		if (text.value == ''){
+			alert('请输入文字！');
+			return;
+		}
+		
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open('get','chat.php?action=send&msg='+text.value,true);
+		xhr.send(null);
+		xhr.onload = function(){
+			var data = JSON.parse(xhr.responseText);
+			//如果出错
+			if (!data['ok']){
+				alert(data['reason']);
+			//没出错
+			}else{
+				//发送消息成功。
+				//var time = new Date();
+				//con.innerHTML += "<li>" + data.data[i].con + "<span>"+time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()+"</span></li>";
+				
+			}
+		}
+		text.value = '';
+		
+	}
+	
+	//每500ms更新一次消息
+	setInterval(function(){
+		
+		if (con.querySelector('li:last-child')){
+			var startid = con.querySelector('li:last-child').getAttribute('id');
+		}else{
+			var startid = 0;
+		}
+		var xhr = new XMLHttpRequest();
+		xhr.open('get','chat.php?action=getMsg&startid='+startid,true);
+		xhr.send(null);
+		xhr.onload = function(){
+			var data = JSON.parse(xhr.responseText);
+			//如果出错
+			if (!data['ok']){
+				alert(data['reason']);
+			//没出错
+			}else{
+				//所有新消息显示出来。
+				//var time = new Date();
+				//con.innerHTML += "<li >" + data.data[i].con + "<span>"+time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()+"</span></li>";
+				var time = null;
+				for (var i = 0 ; i < data.data.length;i++){
+					time = new Date(data.data[i].time);
+					con.innerHTML += "<li id='" +data.data[i].id+ "'>" + data.data[i].con + "<span>"+time.getHours()+":"+time.getMinutes()+":"+time.getSeconds()+"</span></li>";
+				}
+			}
+		}
+		
+	},500);
+	
+	//监听回车事件
+	text.onkeypress = function(e){
+		if (e.keyCode == 13){
+			btn.onclick();
+		}
+	}
+//-->
+</script>
+</html>
+

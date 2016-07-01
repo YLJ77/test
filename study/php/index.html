@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script>/*
+		document.addEventListener('click', function(){
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4) {
+					if(xhr.status == 200) {
+						console.log(xhr.responseText);
+					} else {
+						console.log('error');
+					}
+				}
+			}
+			//xhr.open('get','demo.php?name=boom&age=23',false);
+			xhr.open('post','demo.php',false);
+			xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			xhr.send('name=me&age=secret');
+		}, false)*/
+
+		document.addEventListener('click',function(){
+			ajax({
+				method:'get',
+				url:'demo.php',
+				data:{
+					name:'me',
+					age:'secret'
+				},
+				success:function(text){
+					alert(text);
+				},
+				async:false
+			});
+		},false);
+
+		function ajax(obj) {
+			var xhr = new XMLHttpRequest(),
+				data = formatData(obj.data);
+			url = obj.url.indexOf('?') != -1 ? obj.url : obj.url + '?';
+			if(obj.method == 'get') url = url + data;
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState == 4) {
+					if(xhr.status == 200) {
+						obj.success(xhr.responseText);
+					} else {
+						console.log('error');
+					}
+				}
+			}
+			
+			xhr.open(obj.method,url,obj.async);
+			if (obj.method == 'post') {
+				xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+				xhr.send(data);
+			} else {
+				xhr.send(null);
+			}
+			
+		}
+
+		function formatData(obj){
+			var tmp = [];
+			for(var key in obj) tmp.push(key+'='+obj[key]);
+			return tmp.join('&')
+		}
+	</script>
+</body>
+</html>
+

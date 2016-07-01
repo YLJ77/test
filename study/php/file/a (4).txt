@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="jquery-1.11.2.js"></script>
+	<style>
+		.loading{
+			display:none;
+			color:red;
+		}
+	</style>
+</head>
+<body>
+	<form action="ajax.php" method="post">
+		用户名：<input type="text" name="user">
+		邮件：<input type="text" name="email">
+		男：<input type="radio" name="sex" value="male">
+		女<input type="radio" name="sex" value="female">
+		<input type="button" value="提交">
+	</form>
+	<span class="loading">正在加载中..</span>
+	<div id="box"></div>
+
+	<script>
+	/*$.ajaxSetup({
+		type:'POST',
+		url:'ajax.php',
+		data:$('form').serialize()
+	});*/
+
+
+		$('form input[type=button]').on('click',function(){
+			$.ajax({
+				type:'POST',
+				url:'http://www.abcd.com/ajax.php',
+				data:$('form').serialize(),
+				success:function(response,status,xhr){
+					$('#box').html(response);
+				},
+				// global:false
+				error:function(xhr,errorText,errorType){
+					alert(xhr.status+':'+xhr.statusText);
+				}
+			});
+		})
+
+		$(document).ajaxStart(function(){
+			$('.loading').show();
+		}).ajaxStop(function(){
+			$('.loading').hide();
+		});
+	</script>
+</body>
+</html>
+
+
+1100+1100+550+147+150+20+15+50=3132            3132/3=1044.

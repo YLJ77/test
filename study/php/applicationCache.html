@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html manifest="test.appcache">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="test.css">
+</head>
+<body>
+	<div>hello world!</div>
+
+	<script>
+	var cache = window.applicationCache;
+
+	cache.onchecking = function() {
+		console.log('checking');
+	}
+	cache.onnoupdate = function() {
+		console.log('onnoupdate');
+	}
+	cache.oncached = function() {
+		console.log('oncached');
+	}
+	cache.onobsolete = function() {
+		console.log('onobsolete');
+	}
+
+	cache.onprogress = function() {
+		console.log('onprogress');
+	}
+	cache.onupdateready = function() {
+		console.log('onupdateready');
+	}
+	cache.ondownloading = function() {
+		console.log('ondownloading');
+	}
+	console.log(cache);
+	</script>
+</body>
+</html>

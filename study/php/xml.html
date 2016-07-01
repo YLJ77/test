@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+
+	<script>
+	function ajaxXML(){
+		var xhr = new XMLHttpRequest();
+		xhr.open('get','http://192.168.1.16/ajax/ajax6-stu.php',true);
+		xhr.send(null);
+		xhr.onload = function(){
+			console.log(xhr.responseText);
+		}
+	}
+
+	ajaxXML();
+	</script>
+</body>
+</html>

@@ -1,36 +1,68 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html ng-app='myApp'>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-
+<script src="angular.js"></script>
 </head>
- 
 <body>
-<div id="div1" style="width:100px; height:100px; position:absolute;top:0; left:300px; background:red;"></div>
+	<!-- <div ng-controller='MyController'>
+		<h1>Hello {{ clock }}</h1>
+	</div> -->
 
-<script type="text/javascript">
-function freefall(obj,height,aspeed){
-	if(obj.acceleration==undefined){//把速度定义当前运动的这个DIV的一个属性
-		obj.acceleration=0;	//初始的速度是0
-	}
-	console.log(obj.acceleration);
-	obj.acceleration+=aspeed;  //加速度
-	obj.acceleration*=0.97;  //摩擦系数
-	if(obj.offsetTop+obj.acceleration>=height-obj.offsetHeight){//判断是否到底边
-		clearTimeout(obj.freefall)
-		}else{
-		
-		obj.style.top=obj.offsetTop+obj.acceleration+'px';//正常的运动
-	}
-	
-}
+	<!-- <div ng-controller="MyController">
+		<input ng-model="expr" type="text" placeholder="Enter an expression">
+		<h2>{{ parsedValue }}</h2>
+	</div> -->
 
-	var box = document.getElementById('div1');
+	<div ng-controller="MyController">
+		<input type="email" ng-model="to" placeholder="Recipient">
+		<textarea ng-model="emailBody"></textarea>
+		<pre>{{ previewText }}</pre>
+	</div>
 	
-	box.freefall = setInterval(function(){
-		freefall(box,300,1);
-	},30);
-</script>
+	<script>
+	/*function MyController($scope, $timeout) {
+		var updateClock = function() {
+			$scope.clock = new Date();
+			$timeout(function() {
+				updateClock();
+			}, 1000);
+		};
+		updateClock();
+	}*/
+
+	/*function MyController($scope) {
+		$scope.clock = {
+			now: new Date()
+		};
+		var updateClock = function() {
+			$scope.clock.now = new Date();
+		};
+		setInterval(function() {
+			$scope.$apply(updateClock);
+		});
+		updateClock();
+	}*/
+
+	/*angular.module('myApp', [])
+		   .controller('MyController', 
+		   	function($scope,$parse) {
+		   		$scope.$watch('expr', function(newVal, oldVal, scope) {
+		   			if (newVal !== oldVal) {
+		   				var parseFun = $parse(newVal);
+		   				$scope.parsedValue = parseFun(scope);
+		   			}
+		   		})
+		   	})*/
+
+	angular.module('myApp',[])
+		   .controller('MyController', function($scope, $interpolate) {
+		   		$scope.$watch('emailBody', function(body) {
+		   			if (body) {
+		   				var template = $interpolate(body);
+		   				$scope.previewText = template({to: $scope.to});
+		   			}
+		   		})
+		   })
+	</script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<input type="button" value="button" id="box">
+<script>
+	box.onclick=function(){
+		var worker = new Worker('calculate.js');
+		worker.postMessage('working');
+
+		worker.addEventListener('message', function(e){
+			box.value = e.data;
+			worker.terminate();
+		}, false)
+	}
+
+</script>
+</body>
+</html>

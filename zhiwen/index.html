@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>知问前段</title>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/index.js"></script>
+	<!-- <script src="js/jquery.ui.datepicker-zh-CN.js"></script> -->
+	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="css/jquery-ui.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div id="header">
+		<div class="header_main">
+			<h1>知问</h1>
+			<div class="header_search">
+				<input type="text" name="search" class="search">
+			</div>
+			<div class="header_button">
+				<!-- <input type="button" value="查询" id="search_button"> -->
+				<button id="search_button">查询</button>
+			</div>
+			<div class="header_member">
+				<a href="###" id="reg_a">注册</a> | <a href="###" id="login_a">登陆</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="reg">
+		<!-- 会员注册 -->
+		<!-- <input type="radio" value="male" name="sex" id="male"><label for="male">男</label></input>
+		<input type="radio" value="female" name="sex" id="female"><label for="female">女</label></input>
+		<input type="checkbox" value="red" name="color" id="red"><label for="red">红</label></input>
+		<input type="checkbox" value="blue" name="color" id="blue"><label for="blue">蓝</label></input>
+		<input type="checkbox" value="yellow" name="color" id="yellow"><label for="yellow">黄</label></input>
+		<input type="checkbox" value="pink" name="color" id="pink"><label for="pink">粉</label></input> -->
+		<p>
+			<label for="user">账号</label>
+			<input title="请输入账号，不少于两位" id="user" type="text" name="user" class="text">
+			<span class="star">*</span>
+		</p>
+		<p>
+			<label for="pass">密码</label>
+			<input title="请输入密码，不少于六位" id="pass" type="password" name="pass" class="text">
+			<span class="star">*</span>
+		</p>
+		<p>
+			<label for="email">邮箱</label>
+			<input title="请输入正确的邮箱" id="email" type="text" name="email" class="text">
+			<span class="star">*</span>
+		</p>
+		
+		<p>
+			<label for="">性别：</label>
+			<input type="radio" name="sex" checked="checked" value="male" id="male"></input><label for="male">男</label>
+			<input type="radio" name="sex" value="female" id="female"></input><label for="female">女</label>
+		</p>
+
+		<p>
+			<label for="date">生日</label>
+			<input id="date" readonly="readonly" type="text" name="date" class="text">
+		</p>
+	</div>
+
+<input type="text" id="test">
+
+</body>
+</html>
